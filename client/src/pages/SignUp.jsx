@@ -25,7 +25,7 @@ export default function SignUp() {
         },
       });
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
@@ -36,7 +36,7 @@ export default function SignUp() {
       navigate('/sign-in');
     } catch (error) {
       setLoading(false);
-      setError(error.message);
+      setError(error.response.data.message);
     }
   };
 
