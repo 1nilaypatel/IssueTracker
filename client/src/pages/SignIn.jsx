@@ -1,23 +1,27 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const response = await axios.post('/server/auth/signin', formData, {
         headers: {
           "Content-Type": "application/json",
@@ -25,16 +29,13 @@ export default function SignIn() {
       });
       const data = response.data;
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
-      setLoading(false);
-      setError(error.response.data.message);
+      dispatch(signInFailure(error.response.data.message));
     }
   };
 
@@ -62,7 +63,7 @@ export default function SignIn() {
           disabled={loading}
           className="bg-indigo-900 text-slate-300 p-2 rounded-md hover:bg-opacity-80 disabled:bg-opacity-40"
         >
-          {loading ? "Loading..." : "Sign In"}
+          {loading ? "Loading..." : "Log In"}
         </button>
       </form>
       <div className="flex gap-3 mt-5">
