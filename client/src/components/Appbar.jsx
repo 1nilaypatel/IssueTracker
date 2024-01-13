@@ -13,12 +13,17 @@ export default function Appbar() {
             <span className='text-slate-400'>Tracker</span>
           </h1>
         </Link>
-        <>
+        <div className='flex gap-4'>
+          <Link to='/features'>
+            <span className='text-slate-400 hover:underline'>
+              Features
+            </span>
+          </Link>
           <Link to='/profile'>
             {currentUser ?(
               <img className='rounded-full h-8 w-8 object-cover' src={currentUser.profilephoto} alt='profile' />
             ): (
-              <ul className='flex gap-4'>
+              <ul className='flex sm:gap-4'>
                 <Link to='/sign-in'>
                   <li className='text-slate-400 hidden sm:inline hover:underline'>
                     Log In
@@ -32,7 +37,7 @@ export default function Appbar() {
               </ul>
             )}
           </Link>
-        </>
+        </div>
       </div>
     </header>
   );
