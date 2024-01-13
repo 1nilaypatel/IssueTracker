@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import OAuth from "../components/OAuth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -46,6 +47,7 @@ export default function SignUp() {
         Create your IssueTracker account
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <OAuth />
         <input 
           type="text"
           placeholder="nilaypatel"
@@ -69,7 +71,7 @@ export default function SignUp() {
         />
         <button 
           disabled={loading}
-          className="bg-indigo-900 text-slate-300 p-2 rounded-md hover:bg-opacity-80 disabled:bg-opacity-40"
+          className="bg-gray-700 text-slate-300 p-2 rounded-md hover:bg-opacity-85 disabled:bg-opacity-40"
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
