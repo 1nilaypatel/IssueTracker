@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Appbar from './components/Appbar';
+import {Appbar, PrivateRoute} from './components';
 import {Home, Profile, SignIn, SignUp} from './pages';
 
 export default function App() {
@@ -11,7 +11,9 @@ export default function App() {
           <Route path={"/"} element={<Home/>} />
           <Route path={"/sign-in"} element={<SignIn/>} />
           <Route path={"/sign-up"} element={<SignUp/>} /> 
-          <Route path={"/profile"} element={<Profile/>} />
+          <Route element={<PrivateRoute />}>
+            <Route path={"/profile"} element={<Profile />} />
+          </Route>
         </Routes>
       </Router>
     </div>
