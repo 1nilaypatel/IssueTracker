@@ -1,7 +1,19 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BsPlus, BsSearch, BsBell } from 'react-icons/bs';
+import { useState } from 'react';
+import { CreateBug } from '../pages';
 
-export default function AuthenticatedAppbar({currentUser}) {
+export default function AuthenticatedAppbar({ currentUser }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
       <ul className='flex gap-4'>
@@ -17,20 +29,12 @@ export default function AuthenticatedAppbar({currentUser}) {
         </Link>
       </ul>
       <ul className='flex items-center gap-4'>
-        <Link to='/create-bug'>
-          <li className='text-slate-400 hover:underline'>
-            <BsPlus className='mr-1' />
-          </li>
+        <BsPlus className='text-slate-400 mr-1 cursor-pointer' size={25} onClick={openModal} />
+        <Link to='/dashboard'>
+          <BsSearch className='text-slate-400 mr-1' />
         </Link>
         <Link to='/dashboard'>
-          <li className='text-slate-400 hover:underline'>
-            <BsSearch className='mr-1' />
-          </li>
-        </Link>
-        <Link to='/dashboard'>
-          <li className='text-slate-400 hover:underline'>
-            <BsBell className='mr-1' />
-          </li>
+          <BsBell className='text-slate-400 mr-1' />
         </Link>
         <Link to='/profile'>
           <img 
@@ -40,6 +44,7 @@ export default function AuthenticatedAppbar({currentUser}) {
           />
         </Link>
       </ul>
+      <CreateBug isOpen={isModalOpen} onClose={closeModal} onSubmit={(data) => console.log(data)} />
     </div>
-  )
+  );
 }
