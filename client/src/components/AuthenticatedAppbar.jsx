@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { BsPlus, BsSearch, BsBell } from 'react-icons/bs';
 import { useState } from 'react';
-import { CreateBug } from '../pages';
+import { CreateIssue } from '../pages';
 
 export default function AuthenticatedAppbar({ currentUser }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,9 +22,9 @@ export default function AuthenticatedAppbar({ currentUser }) {
             Dashboard
           </li>
         </Link>
-        <Link to='/bugs'>
+        <Link to='/issues'>
           <li className='text-slate-300 flex text-sm sm:text-base'>
-            Bugs
+            Issues
           </li>
         </Link>
       </ul>
@@ -44,7 +44,7 @@ export default function AuthenticatedAppbar({ currentUser }) {
           />
         </Link>
       </ul>
-      <CreateBug isOpen={isModalOpen} onClose={closeModal} onSubmit={(data) => console.log(data)} />
+      <CreateIssue isOpen={isModalOpen} onClose={closeModal} onSubmit={(data) => console.log(data)} />
     </div>
   );
 }

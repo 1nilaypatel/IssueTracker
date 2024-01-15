@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-const CreateBug = ({ isOpen, onClose, onSubmit }) => {
+
+export default function CreateIssue({ isOpen, onClose, onSubmit }) {
   const [issueData, setIssueData] = useState({
     issueTitle: '',
     description: '',
@@ -136,5 +137,3 @@ const CreateBug = ({ isOpen, onClose, onSubmit }) => {
     </div>
   );
 };
-
-export default CreateBug;

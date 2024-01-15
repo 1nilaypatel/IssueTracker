@@ -1,6 +1,6 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {Appbar, PrivateRoute} from './components';
-import {Home, Profile, SignIn, SignUp, Features, Dashboard, Bugs} from './pages';
+import {Home, Profile, SignIn, SignUp, Features, Dashboard, Issues} from './pages';
 
 export default function App() {
   return (
@@ -14,7 +14,7 @@ export default function App() {
           <Route path={"/features"} element={<Features/>} /> 
           <Route element={<PrivateRoute />}>
             <Route path={"/dashboard"} element={<Dashboard/>} /> 
-            <Route path={"/bugs"} element={<Bugs/>} /> 
+            <Route path={"/issues"} element={<Issues/>} /> 
             <Route path={"/profile"} element={<Profile />} />
           </Route>
         </Routes>

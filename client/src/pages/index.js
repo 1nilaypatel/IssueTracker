@@ -4,7 +4,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Features from './Features';
 import Dashboard from './Dashboard';
-import CreateBug from './CreateBug';
-import Bugs from './Bugs';
+import CreateIssue from './CreateIssue';
+import Issues from './Issues';
 
-export {Home, Profile, SignIn, SignUp, Features, Dashboard, CreateBug, Bugs};
+export {Home, Profile, SignIn, SignUp, Features, Dashboard, CreateIssue, Issues};

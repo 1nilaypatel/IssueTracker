@@ -28,6 +28,10 @@ const issueSchema = new mongoose.Schema({
   dueDate: {
     type: Date,
   },
+  userRef:{
+    type: String,
+    required: true,
+  },
 }, 
 {timestamps: true});
 
