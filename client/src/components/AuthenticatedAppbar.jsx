@@ -44,7 +44,7 @@ export default function AuthenticatedAppbar({ currentUser }) {
           />
         </Link>
       </ul>
-      <CreateIssue isOpen={isModalOpen} onClose={closeModal} onSubmit={(data) => console.log(data)} />
+      <CreateIssue isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }

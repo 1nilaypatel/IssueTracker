@@ -24,9 +24,11 @@ const issueSchema = new mongoose.Schema({
   },
   label: {
     type: [String],
+    required: true,
   },
   dueDate: {
     type: Date,
+    required: true,
   },
   userRef:{
     type: String,

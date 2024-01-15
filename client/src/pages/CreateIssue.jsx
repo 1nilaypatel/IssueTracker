@@ -1,8 +1,13 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 
 
-export default function CreateIssue({ isOpen, onClose, onSubmit }) {
+export default function CreateIssue({ isOpen, onClose }) {
+  const { currentUser } = useSelector((state) => state.user);
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [issueData, setIssueData] = useState({
     issueTitle: '',
     description: '',
@@ -28,19 +33,39 @@ export default function CreateIssue({ isOpen, onClose, onSubmit }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(issueData);
-    setIssueData({
-      issueTitle: '',
-      description: '',
-      status: 'Open',
-      priority: 'Medium',
-      assignee: '',
-      label: [],
-      dueDate: '',
-    });
-    onClose();
+    try {
+      setIsLoading(true);
+      setError(true);
+      const response = await axios.post("/server/issue/create", {
+        ...issueData,
+        userRef: currentUser._id,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = response.data;
+      setIsLoading(false);
+      if (data.success === false) {
+        setError(data.message);
+      } else {
+        setIssueData({
+          issueTitle: '',
+          description: '',
+          status: 'Open',
+          priority: 'Medium',
+          assignee: '',
+          label: [],
+          dueDate: '',
+        });
+        onClose();
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -64,7 +89,8 @@ export default function CreateIssue({ isOpen, onClose, onSubmit }) {
                 id='issueTitle'
                 className='bg-gray-900 text-slate-200 text-xl py-2 w-full focus:outline-none'
                 placeholder='Issue title'
-                // value={issueData.issueTitle}
+                required
+                value={issueData.issueTitle}
                 onChange={handleChange}
               />
             </div>
@@ -73,7 +99,7 @@ export default function CreateIssue({ isOpen, onClose, onSubmit }) {
                 id='description'
                 className='bg-gray-900 text-slate-200 text-base py-2 w-full focus:outline-none'
                 placeholder='Add description...'
-                // value={issueData.description}
+                value={issueData.description}
                 onChange={handleChange}
               />
             </div>
@@ -105,7 +131,8 @@ export default function CreateIssue({ isOpen, onClose, onSubmit }) {
                 id='assignee'
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
                 placeholder='Assignee'
-                // value={issueData.assignee}
+                required
+                value={issueData.assignee}
                 onChange={handleChange}
               />
               <input
@@ -113,24 +140,28 @@ export default function CreateIssue({ isOpen, onClose, onSubmit }) {
                 id='label'
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
                 placeholder='Enter labels'
-                // value={issueData.label.join(', ')}
+                required
+                value={issueData.label.join(', ')}
                 onChange={handleLabelChange}
               />
               <input
                 type='date'
                 id='dueDate'
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
-                // value={issueData.dueDate}
+                required
+                value={issueData.dueDate}
                 onChange={handleChange}
               />
             </div>
             <button
+              disabled={isLoading}
               type='button'
-              className='bg-indigo-500 text-slate-200 text-sm px-2 py-1 rounded-sm hover:bg-indigo-600 focus:outline-none'
+              className='bg-indigo-500 text-slate-200 text-sm px-2 py-1 rounded-sm hover:bg-indigo-600 focus:outline-none disabled:bg-opacity-40'
               onClick={handleSubmit}
             >
-              Create Issue
+              {isLoading ? "Creating..." : "Create Issue"}
             </button>
+            {error && <p className='text-red-500 text-sm'>{error}</p> }
           </div>
         </div>
       </div>
