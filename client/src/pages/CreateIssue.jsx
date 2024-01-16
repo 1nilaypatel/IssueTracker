@@ -117,7 +117,7 @@ export default function CreateIssue({ isOpen, onClose }) {
               </select>
               <select
                 id='priority'
-                className='bg-gray-700 text-slate-200 rounded-sm py-1 focus:outline-none'
+                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
                 onChange={handleChange}
               >
                 <option value='No priority'>No priority</option>
@@ -138,19 +138,29 @@ export default function CreateIssue({ isOpen, onClose }) {
               <input
                 type='text'
                 id='label'
-                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
-                placeholder='Enter labels'
+                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-52'
+                placeholder='Bug, Feature, Improvements'
                 required
                 value={issueData.label.join(', ')}
                 onChange={handleLabelChange}
               />
               <input
-                type='date'
-                id='dueDate'
-                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
+                type="text"
+                id="dueDate"
+                className="bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-28"
+                placeholder="Due Date"
                 required
                 value={issueData.dueDate}
                 onChange={handleChange}
+                onFocus={(e) => {
+                  e.target.type = "date";
+                }}
+                onBlur={(e) => {
+                  e.target.type = "text";
+                  if (!e.target.value) {
+                    e.target.placeholder = "Due Date";
+                  }
+                }}
               />
             </div>
             <button
