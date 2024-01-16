@@ -8,3 +8,12 @@ export const createIssue = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getIssues = async (req, res, next) => {
+  try {
+    const issues = await Issue.find();
+    return res.status(200).json(issues);
+  } catch (error) {
+    next(error);
+  }
+};

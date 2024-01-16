@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BsPlus, BsSearch, BsBell } from 'react-icons/bs';
+import { BsPlus, BsBell, BsFilter } from 'react-icons/bs';
 import { useState } from 'react';
 import { CreateIssue } from '../pages';
 
@@ -29,10 +29,8 @@ export default function AuthenticatedAppbar({ currentUser }) {
         </Link>
       </ul>
       <ul className='flex items-center gap-4'>
-        <BsPlus className='text-slate-400 mr-1 cursor-pointer' size={25} onClick={openModal} />
-        <Link to='/dashboard'>
-          <BsSearch className='text-slate-400 mr-1' />
-        </Link>
+        <BsPlus className='text-slate-400 mr-1 cursor-pointer' size={28} onClick={openModal} />
+        <BsFilter className='text-slate-400 mr-1' size={22} />
         <Link to='/dashboard'>
           <BsBell className='text-slate-400 mr-1' />
         </Link>
