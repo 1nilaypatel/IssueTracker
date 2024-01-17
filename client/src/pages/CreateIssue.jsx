@@ -18,6 +18,20 @@ export default function CreateIssue({ isOpen, onClose }) {
     dueDate: '',
   });
 
+  const resetAndClose = () => {
+    setIssueData({
+      issueTitle: '',
+      description: '',
+      status: 'Open',
+      priority: 'Medium',
+      assignee: '',
+      label: [],
+      dueDate: '',
+    });
+    onClose();
+  };
+  
+
   const handleChange = (e) => {
     setIssueData({
       ...issueData,
@@ -51,16 +65,7 @@ export default function CreateIssue({ isOpen, onClose }) {
       if (data.success === false) {
         setError(data.message);
       } else {
-        setIssueData({
-          issueTitle: '',
-          description: '',
-          status: 'Open',
-          priority: 'Medium',
-          assignee: '',
-          label: [],
-          dueDate: '',
-        });
-        onClose();
+        resetAndClose();
       }
     } catch (error) {
       setError(error.response.data.message);
@@ -72,7 +77,7 @@ export default function CreateIssue({ isOpen, onClose }) {
     <div className={`fixed inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
       <div className='flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
         <div className='fixed inset-0 transition-opacity' aria-hidden='true'>
-          <div className='absolute inset-0 bg-gray-500 opacity-5'></div>
+          <div className='absolute inset-0 bg-gray-500 opacity-20'></div>
         </div>
 
         <span className='hidden sm:inline-block sm:align-middle sm:h-screen' aria-hidden='true' />
@@ -81,7 +86,7 @@ export default function CreateIssue({ isOpen, onClose }) {
           <div className='bg-gray-900 max-w-4xl px-4 pt-5 pb-4 sm:p-5 sm:pb-4'>
             <div className='flex items-center justify-between mb-4'>
               <h2 className='text-md font-lg text-slate-200'>New issue</h2>
-              <AiOutlineClose className='text-slate-300 cursor-pointer' size={25} onClick={onClose} />
+              <AiOutlineClose className='text-slate-300 cursor-pointer' size={25} onClick={resetAndClose} />
             </div>
             <div className='mb-4'>
               <input
