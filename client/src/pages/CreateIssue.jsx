@@ -20,6 +20,7 @@ export default function CreateIssue({ isOpen, onClose }) {
     assignee: '',
     label: [],
     dueDate: '',
+    profilephoto: '',
   });
   const [users, setUsers] = useState([]);
 
@@ -44,6 +45,7 @@ export default function CreateIssue({ isOpen, onClose }) {
       assignee: '',
       label: [],
       dueDate: '',
+      profilephoto: '',
     });
     onClose();
   };
@@ -56,10 +58,11 @@ export default function CreateIssue({ isOpen, onClose }) {
     });
   };
 
-  const handleAssigneeChange = (assignee) => {
+  const handleAssigneeChange = (user) => {
     setIssueData({
       ...issueData,
-      assignee: assignee,
+      assignee: user.username,
+      profilephoto: user.profilephoto,
     });
   };
 
@@ -141,6 +144,7 @@ export default function CreateIssue({ isOpen, onClose }) {
                 className='bg-gray-700 text-slate-200 rounded-sm py-1 focus:outline-none'
                 onChange={handleChange}
               >
+                <option value=''>Change Status</option>
                 <option value='Open'>Open</option>
                 <option value='In Progress'>In Progress</option>
                 <option value='To be Tested'>To be Tested</option>
@@ -152,7 +156,7 @@ export default function CreateIssue({ isOpen, onClose }) {
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
                 onChange={handleChange}
               >
-                <option value='No priority'>No priority</option>
+                <option value=''>Set Priority</option>
                 <option value='Urgent'>Urgent</option>
                 <option value='High'>High</option>
                 <option value='Medium'>Medium</option>
@@ -161,11 +165,11 @@ export default function CreateIssue({ isOpen, onClose }) {
               <select
                 id='assignee'
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
-                onChange={(e) => handleAssigneeChange(e.target.value)}
+                onChange={(e) => handleAssigneeChange(users.find(user => user._id === e.target.value))}
               >
                 <option value=''>Assignee</option>
                 {users.map((user) => (
-                  <option key={user._id} value={user.username}>
+                  <option key={user._id} value={user._id}>
                     {user.username}
                   </option>
                 ))}
@@ -174,7 +178,7 @@ export default function CreateIssue({ isOpen, onClose }) {
                 type='text'
                 id='label'
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-52'
-                placeholder='Bug, Feature, Improvements'
+                placeholder='bug, feature, improvement'
                 required
                 value={issueData.label.join(', ')}
                 onChange={handleLabelChange}

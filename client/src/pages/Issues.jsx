@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faCircle, faCog, faFlask, faCheckCircle, faExclamationCircle, faExclamationTriangle, faArrowUp, faArrowRight, faArrowDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
@@ -40,8 +40,6 @@ export default function Issues() {
 
   const getPriorityIcon = (priority) => {
     switch (priority) {
-      case 'No priority':
-        return <FontAwesomeIcon icon={faCircle} className='text-gray-500' />;
       case 'Urgent':
         return <FontAwesomeIcon icon={faExclamationTriangle} className='text-red-500' />;
       case 'High':
@@ -49,7 +47,7 @@ export default function Issues() {
       case 'Medium':
         return <FontAwesomeIcon icon={faArrowRight} className='text-yellow-500' />;
       case 'Low':
-        return <FontAwesomeIcon icon={faArrowDown} className='text-green-500' />;
+        return <FontAwesomeIcon icon={faArrowDown} className='text-gray-500' />;
       default:
         return null;
     }
@@ -101,7 +99,13 @@ export default function Issues() {
                 <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full'>
                   {formatDate(issue.createdAt)}
                 </div>
-                <div>{issue.assignee}</div>
+                <div>
+                  <img
+                    src={issue.profilephoto}
+                    alt={`${issue.assignee}'s profile`}
+                    className='w-7 h-7 rounded-full object-contain'
+                  />
+                </div>
               </div>
             </div>
           </div>
