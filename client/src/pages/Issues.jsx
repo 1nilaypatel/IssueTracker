@@ -2,19 +2,22 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faCircle, faCog, faFlask, faCheckCircle, faExclamationCircle, faExclamationTriangle, faArrowUp, faArrowRight, faArrowDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
 
 export default function Issues() {
-  const [issues, setIssues] = useState([]);
+  const { issues } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
+  const fetchIssues = async () => {
+    try {
+      const response = await axios.get('/server/issue/get');
+      dispatch(fetchIssuesSuccess(response.data));
+    } catch (error) {
+      console.error('Error fetching issues:', error);
+    }
+  };
   useEffect(() => {
-    const fetchIssues = async () => {
-      try {
-        const response = await axios.get('/server/issue/get');
-        setIssues(response.data);
-      } catch (error) {
-        console.error('Error fetching issues:', error);
-      }
-    };
     fetchIssues();
   }, []);
 

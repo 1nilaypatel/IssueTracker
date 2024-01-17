@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
 
 
 export default function CreateIssue({ isOpen, onClose }) {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +67,8 @@ export default function CreateIssue({ isOpen, onClose }) {
       if (data.success === false) {
         setError(data.message);
       } else {
+        const response = await axios.get('/server/issue/get');
+        dispatch(fetchIssuesSuccess(response.data));
         resetAndClose();
       }
     } catch (error) {
