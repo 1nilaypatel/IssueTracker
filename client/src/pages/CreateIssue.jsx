@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +21,19 @@ export default function CreateIssue({ isOpen, onClose }) {
     label: [],
     dueDate: '',
   });
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('/server/user');
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []); 
 
   const resetAndClose = () => {
     setIssueData({
@@ -40,6 +53,13 @@ export default function CreateIssue({ isOpen, onClose }) {
     setIssueData({
       ...issueData,
       [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleAssigneeChange = (assignee) => {
+    setIssueData({
+      ...issueData,
+      assignee: assignee,
     });
   };
 
@@ -138,15 +158,18 @@ export default function CreateIssue({ isOpen, onClose }) {
                 <option value='Medium'>Medium</option>
                 <option value='Low'>Low</option>
               </select>
-              <input
-                type='text'
+              <select
                 id='assignee'
                 className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
-                placeholder='Assignee'
-                required
-                value={issueData.assignee}
-                onChange={handleChange}
-              />
+                onChange={(e) => handleAssigneeChange(e.target.value)}
+              >
+                <option value=''>Assignee</option>
+                {users.map((user) => (
+                  <option key={user._id} value={user.username}>
+                    {user.username}
+                  </option>
+                ))}
+              </select>
               <input
                 type='text'
                 id='label'
