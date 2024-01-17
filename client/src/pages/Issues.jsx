@@ -75,10 +75,10 @@ export default function Issues() {
                 {getStatusIcon(issue.status)}
                 {issue.status}
               </span>
-              <div className='text-base'>{issue.issueTitle}</div>
+              <div className='text-sm md:text-base truncate'>{issue.issueTitle}</div>
             </div>
             <div className='flex flex-row gap-2'>
-              <div className='flex flex-row items-center gap-1'>
+              <div className='flex flex-row items-center gap-1 hidden sm:inline'>
                 {issue.label.map((label) => (
                   <span
                     key={label}
@@ -89,14 +89,14 @@ export default function Issues() {
                 ))}
               </div>
               <div className='text-sm flex flex-row gap-2 items-center'>
-                <div className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-0.5'>
+                <div className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-0.5 hidden md:inline'>
                   <FontAwesomeIcon
                     icon={faCalendarAlt}
                     className='text-red-500 mr-1'
                   />
                   {formatDate(issue.dueDate)}
                 </div>
-                <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full'>
+                <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full hidden md:inline'>
                   {formatDate(issue.createdAt)}
                 </div>
                 <div>

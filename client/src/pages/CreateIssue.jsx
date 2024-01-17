@@ -141,7 +141,7 @@ export default function CreateIssue({ isOpen, onClose }) {
             <div className='flex flex-col sm:flex-row sm:items-center justify-start gap-2 mb-4 text-sm'>
               <select
                 id='status'
-                className='bg-gray-700 text-slate-200 rounded-sm py-1 focus:outline-none'
+                className='bg-gray-700 text-slate-200 rounded-sm py-1 focus:outline-none w-32'
                 onChange={handleChange}
               >
                 <option value=''>Change Status</option>
@@ -153,7 +153,7 @@ export default function CreateIssue({ isOpen, onClose }) {
               </select>
               <select
                 id='priority'
-                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
+                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-28'
                 onChange={handleChange}
               >
                 <option value=''>Set Priority</option>
@@ -164,7 +164,7 @@ export default function CreateIssue({ isOpen, onClose }) {
               </select>
               <select
                 id='assignee'
-                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none'
+                className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-36'
                 onChange={(e) => handleAssigneeChange(users.find(user => user._id === e.target.value))}
               >
                 <option value=''>Assignee</option>
