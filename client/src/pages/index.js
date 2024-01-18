@@ -6,5 +6,6 @@ import Features from './Features';
 import Dashboard from './Dashboard';
 import CreateIssue from './CreateIssue';
 import Issues from './Issues';
+import UpdateIssue from './UpdateIssue';
 
-export {Home, Profile, SignIn, SignUp, Features, Dashboard, CreateIssue, Issues};
+export {Home, Profile, SignIn, SignUp, Features, Dashboard, CreateIssue, Issues, UpdateIssue};

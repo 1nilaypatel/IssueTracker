@@ -1,13 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faCircle, faCog, faFlask, faCheckCircle, faExclamationCircle, faExclamationTriangle, faArrowUp, faArrowRight, faArrowDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
+import UpdateIssue from './UpdateIssue.jsx';
 
 export default function Issues() {
   const { issues } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [clickedIssue, setClickedIssue] = useState(null);
+
+  const handleClickIssue = (issue) => {
+    setClickedIssue(issue);
+  }
+
+  const closeIssueBox = () => {
+    setClickedIssue(null);
+  };
 
   const fetchIssues = async () => {
     try {
@@ -64,7 +74,7 @@ export default function Issues() {
   return (
     <div className='text-slate-300 flex flex-col gap-2 p-4 justify-center'>
       {issues.map((issue) => (
-        <div key={issue._id} className='bg-gray-800 p-3 rounded-md shadow-md'>
+        <div key={issue._id} className='bg-gray-800 p-3 rounded-md shadow-md' onClick={() => handleClickIssue(issue)}>
           <div className='flex justify-between items-center'>
             <div className='flex flex-row gap-2 items-center'>
               <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
@@ -111,6 +121,7 @@ export default function Issues() {
           </div>
         </div>
       ))}
+      {clickedIssue && <UpdateIssue issue={clickedIssue} onClose={closeIssueBox} />}
     </div>
   );
 }

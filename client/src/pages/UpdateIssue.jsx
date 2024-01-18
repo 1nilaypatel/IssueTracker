@@ -6,22 +6,22 @@ import { IssueBox } from '../components';
 import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
 
 
-export default function CreateIssue({ isOpen, onClose }) {
+export default function UpdateIssue({ issue, onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [issueData, setIssueData] = useState({
-    issueTitle: '',
-    description: '',
-    status: '',
-    priority: '',
-    assignee: '',
-    label: [],
-    dueDate: '',
-    profilephoto: '',
-    assigneeId: '',
+    issueTitle: issue.issueTitle,
+    description: issue.description,
+    status: issue.status,
+    priority: issue.priority,
+    assignee: issue.assignee,
+    label: issue.label,
+    dueDate: issue.dueDate,
+    profilephoto: issue.profilephoto,
+    assigneeId: issue.assigneeId,
   });
 
   const resetAndClose = () => {
@@ -44,36 +44,11 @@ export default function CreateIssue({ isOpen, onClose }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setIsLoading(true);
-      setError(true);
-      const response = await axios.post("/server/issue/create", {
-        ...issueData,
-        userRef: currentUser._id,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = response.data;
-      setIsLoading(false);
-      if (data.success === false) {
-        setError(data.message);
-      } else {
-        const response = await axios.get('/server/issue/get');
-        dispatch(fetchIssuesSuccess(response.data));
-        resetAndClose();
-        navigate('/issues');
-      }
-    } catch (error) {
-      setError(error.response.data.message);
-      setIsLoading(false);
-    }
+    
   };
 
   return (
-    <div className={`fixed inset-0 overflow-y-auto ${isOpen ? 'block' : 'hidden'}`}>
+    <div className={`fixed inset-0 overflow-y-auto`}>
       <div className='flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
         <div className='fixed inset-0 transition-opacity' aria-hidden='true'>
           <div className='absolute inset-0 bg-gray-500 opacity-20'></div>
@@ -86,7 +61,7 @@ export default function CreateIssue({ isOpen, onClose }) {
             <IssueBox
               initialData={issueData}
               onClose={onClose}
-              title="New Issue"
+              title="Update Issue"
               onIssueDataChange={handleIssueDataChange}
             />
             <button
@@ -95,7 +70,7 @@ export default function CreateIssue({ isOpen, onClose }) {
               className='bg-indigo-500 text-slate-200 text-sm px-2 py-1 rounded-sm hover:bg-indigo-600 focus:outline-none disabled:bg-opacity-40'
               onClick={handleSubmit}
             >
-              {isLoading ? "Creating..." : "Create Issue"}
+              {isLoading ? "Updating..." : "Update Issue"}
             </button>
             {error && <p className='text-red-500 text-sm'>{error}</p> }
           </div>
