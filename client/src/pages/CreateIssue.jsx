@@ -21,6 +21,7 @@ export default function CreateIssue({ isOpen, onClose }) {
     label: [],
     dueDate: '',
     profilephoto: '',
+    assigneeId: '',
   });
   const [users, setUsers] = useState([]);
 
@@ -46,6 +47,7 @@ export default function CreateIssue({ isOpen, onClose }) {
       label: [],
       dueDate: '',
       profilephoto: '',
+      assigneeId: '',
     });
     onClose();
   };
@@ -63,6 +65,7 @@ export default function CreateIssue({ isOpen, onClose }) {
       ...issueData,
       assignee: user.username,
       profilephoto: user.profilephoto,
+      assigneeId: user._id,
     });
   };
 

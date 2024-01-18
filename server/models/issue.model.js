@@ -36,6 +36,11 @@ const issueSchema = new mongoose.Schema({
   },
   profilephoto: {
     type: String,
+    required: true,
+  },
+  assigneeId: {
+    type: String,
+    required: true,
   },
 }, 
 {timestamps: true});
