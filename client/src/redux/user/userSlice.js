@@ -5,6 +5,7 @@ const initialState = {
   error: null,
   loading: false,
   issues: [],
+  users: [],
 };
 
 const userSlice = createSlice({
@@ -25,7 +26,10 @@ const userSlice = createSlice({
     },
     fetchIssuesSuccess: (state, action) => {
       state.issues = action.payload;
-    }
+    },
+    fetchUsersSuccess: (state, action) => {
+      state.users = action.payload;
+    },
   },
 });
 
@@ -34,6 +38,7 @@ export const {
   signInSuccess,
   signInFailure,
   fetchIssuesSuccess,
+  fetchUsersSuccess,
 } = userSlice.actions;
 
 export default userSlice.reducer;

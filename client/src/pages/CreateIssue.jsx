@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
+import { fetchIssuesSuccess, fetchUsersSuccess } from '../redux/user/userSlice.js';
 
 
 export default function CreateIssue({ isOpen, onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, users } = useSelector((state) => state.user);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [issueData, setIssueData] = useState({
@@ -23,19 +23,18 @@ export default function CreateIssue({ isOpen, onClose }) {
     profilephoto: '',
     assigneeId: '',
   });
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get('/server/user');
-        setUsers(response.data);
+        dispatch(fetchUsersSuccess(response.data));
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     };
     fetchUsers();
-  }, []); 
+  }, [dispatch]); 
 
   const resetAndClose = () => {
     setIssueData({
@@ -171,7 +170,7 @@ export default function CreateIssue({ isOpen, onClose }) {
                 onChange={(e) => handleAssigneeChange(users.find(user => user._id === e.target.value))}
               >
                 <option value=''>Assignee</option>
-                {users.map((user) => (
+                {users && users.map((user) => (
                   <option key={user._id} value={user._id}>
                     {user.username}
                   </option>
