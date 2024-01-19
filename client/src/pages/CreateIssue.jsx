@@ -5,11 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { IssueBox } from '../components';
 import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
 
-
 export default function CreateIssue({ isOpen, onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, issues } = useSelector((state) => state.user);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [issueData, setIssueData] = useState({
@@ -56,13 +55,12 @@ export default function CreateIssue({ isOpen, onClose }) {
           'Content-Type': 'application/json',
         },
       });
-      const data = response.data;
+      const createdIssue = response.data;
       setIsLoading(false);
-      if (data.success === false) {
-        setError(data.message);
+      if (createdIssue.success === false) {
+        setError(createdIssue.message);
       } else {
-        const response = await axios.get('/server/issue/get');
-        dispatch(fetchIssuesSuccess(response.data));
+        dispatch(fetchIssuesSuccess([...issues, createdIssue]));
         resetAndClose();
         navigate('/issues');
       }

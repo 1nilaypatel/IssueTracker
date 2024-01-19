@@ -1,17 +1,16 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IssueBox } from '../components';
-import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
-
+import { deleteIssuesSuccess, updateIssuesSuccess } from '../redux/user/userSlice.js';
 
 export default function UpdateIssue({ issue, onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [issueData, setIssueData] = useState({
     issueTitle: issue.issueTitle,
     description: issue.description,
@@ -43,9 +42,41 @@ export default function UpdateIssue({ issue, onClose }) {
     setIssueData(newIssueData);
   };
 
-  const handleSubmit = async (e) => {
-    
+  const handleUpdate = async () => {
+    try {
+      setIsUpdateLoading(true);
+      setError(false);
+      const response = await axios.put(`/server/issue/update/${issue._id}`, issueData);
+      dispatch(updateIssuesSuccess([response.data]));
+      setIssueData(response.data);
+      setIsUpdateLoading(false);
+      resetAndClose();
+      navigate('/issues');
+    } catch (error) {
+      setError(error.response.data.message);
+      setIsUpdateLoading(false);
+    }
   };
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this issue?");
+    if (!confirmDelete) {
+      return;
+    }
+    try {
+      setIsDeleteLoading(true);
+      setError(false);
+      await axios.delete(`/server/issue/delete/${issue._id}`);
+      dispatch(deleteIssuesSuccess(issue._id));
+      setIsDeleteLoading(false);
+      resetAndClose();
+      navigate('/issues');
+    } catch (error) {
+      setError(error.response.data.message);
+      setIsDeleteLoading(false);
+    }
+  };
+
 
   return (
     <div className={`fixed inset-0 overflow-y-auto`}>
@@ -64,14 +95,24 @@ export default function UpdateIssue({ issue, onClose }) {
               title="Update Issue"
               onIssueDataChange={handleIssueDataChange}
             />
-            <button
-              disabled={isLoading}
-              type='button'
-              className='bg-indigo-500 text-slate-200 text-sm px-2 py-1 rounded-sm hover:bg-indigo-600 focus:outline-none disabled:bg-opacity-40'
-              onClick={handleSubmit}
-            >
-              {isLoading ? "Updating..." : "Update Issue"}
-            </button>
+            <div className='flex flex-row gap-3'>
+              <button
+                disabled={isUpdateLoading || isDeleteLoading}
+                type='button'
+                className='bg-indigo-500 text-slate-200 text-sm px-2 py-1 rounded-sm hover:bg-indigo-600 focus:outline-none disabled:bg-opacity-40'
+                onClick={handleUpdate}
+              >
+                {isUpdateLoading ? "Updating..." : "Update Issue"}
+              </button>
+              <button
+                disabled={isDeleteLoading || isUpdateLoading}
+                type='button'
+                className='bg-red-500 text-slate-200 text-sm px-2 py-1 rounded-sm hover:bg-red-600 focus:outline-none disabled:bg-opacity-40'
+                onClick={handleDelete}
+              >
+                {isDeleteLoading ? "Deleting..." : "Delete Issue"}
+              </button>
+            </div>
             {error && <p className='text-red-500 text-sm'>{error}</p> }
           </div>
         </div>

@@ -30,6 +30,15 @@ const userSlice = createSlice({
     fetchUsersSuccess: (state, action) => {
       state.users = action.payload;
     },
+    deleteIssuesSuccess: (state, action) => {
+      state.issues = state.issues.filter((issue) => issue._id !== action.payload);
+    },
+    updateIssuesSuccess: (state, action) => {
+      const updatedIssue = action.payload;
+      state.issues = state.issues.map((issue) =>
+        issue._id === updatedIssue._id ? updatedIssue : issue
+      );
+    },
   },
 });
 
@@ -39,6 +48,8 @@ export const {
   signInFailure,
   fetchIssuesSuccess,
   fetchUsersSuccess,
+  deleteIssuesSuccess,
+  updateIssuesSuccess,
 } = userSlice.actions;
 
 export default userSlice.reducer;
