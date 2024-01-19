@@ -48,7 +48,6 @@ export default function UpdateIssue({ issue, onClose }) {
       setError(false);
       const response = await axios.put(`/server/issue/update/${issue._id}`, issueData);
       dispatch(updateIssuesSuccess([response.data]));
-      setIssueData(response.data);
       setIsUpdateLoading(false);
       resetAndClose();
       navigate('/issues');

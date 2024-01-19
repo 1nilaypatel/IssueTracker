@@ -118,7 +118,6 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
           id='label'
           className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-52'
           placeholder='bug, feature, improvement'
-          required
           value={issueData.label.join(', ')}
           onChange={(e) => 
             handleIssueDataChange({ 
