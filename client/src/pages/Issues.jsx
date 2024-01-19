@@ -85,7 +85,7 @@ export default function Issues() {
                 {getStatusIcon(issue.status)}
                 {issue.status}
               </span>
-              <div className='text-sm md:text-base truncate'>{issue.issueTitle}</div>
+              <div className='text-sm md:text-base line-clamp-1'>{issue.issueTitle}</div>
             </div>
             <div className='flex flex-row gap-2'>
               <div className='flex flex-row items-center gap-1 hidden sm:inline'>
