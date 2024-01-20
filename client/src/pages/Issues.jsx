@@ -121,7 +121,7 @@ export default function Issues() {
           </div>
         </div>
       ))}
-      {clickedIssue && <UpdateIssue issue={clickedIssue} onClose={closeIssueBox} />}
+      {clickedIssue && <UpdateIssue issue={clickedIssue} onClose={closeIssueBox} fetchIssues={fetchIssues} />}
     </div>
   );
 }

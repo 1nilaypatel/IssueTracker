@@ -1,27 +1,15 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { IssueBox } from '../components';
 import { deleteIssuesSuccess, updateIssuesSuccess } from '../redux/user/userSlice.js';
 
-export default function UpdateIssue({ issue, onClose }) {
-  const navigate = useNavigate();
+export default function UpdateIssue({ issue, onClose, fetchIssues }) {
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const [isUpdateLoading, setIsUpdateLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-  const [issueData, setIssueData] = useState({
-    issueTitle: issue.issueTitle,
-    description: issue.description,
-    status: issue.status,
-    priority: issue.priority,
-    assignee: issue.assignee,
-    label: issue.label,
-    dueDate: issue.dueDate,
-    profilephoto: issue.profilephoto,
-    assigneeId: issue.assigneeId,
-  });
+  const [issueData, setIssueData] = useState(issue);
 
   const resetAndClose = () => {
     setIssueData({
@@ -50,7 +38,7 @@ export default function UpdateIssue({ issue, onClose }) {
       dispatch(updateIssuesSuccess([response.data]));
       setIsUpdateLoading(false);
       resetAndClose();
-      navigate('/issues');
+      fetchIssues();
     } catch (error) {
       setError(error.response.data.message);
       setIsUpdateLoading(false);
@@ -69,7 +57,6 @@ export default function UpdateIssue({ issue, onClose }) {
       dispatch(deleteIssuesSuccess(issue._id));
       setIsDeleteLoading(false);
       resetAndClose();
-      navigate('/issues');
     } catch (error) {
       setError(error.response.data.message);
       setIsDeleteLoading(false);
