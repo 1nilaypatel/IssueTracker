@@ -30,16 +30,21 @@ export default function AuthenticatedAppbar({ currentUser }) {
 
   const filterIssues = (filter) => {
     let filtered = [...issues];
-
     if (filter === 'status') {
       const statusOrder = ['Open', 'In Progress', 'To be Tested', 'Closed', 'Reopen'];
       filtered.sort((a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status));
     }
-
+    if (filter === 'priority') {
+      const priorityOrder = ['Urgent', 'High', 'Medium', 'Low'];
+      filtered.sort((a, b) => priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority));
+    }
+    if (filter === 'dueDate') {
+      filtered.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    }
     dispatch(updateFilteredIssues(filtered));
     closeDropdown();
   };
-
+  
   const resetFilters = () => {
     dispatch(updateFilteredIssues(issues));
     closeDropdown();
@@ -66,7 +71,6 @@ export default function AuthenticatedAppbar({ currentUser }) {
       </Link>
       <ul className='flex items-center gap-4'>
         <BsPlus className='text-slate-400 mr-1 cursor-pointer' size={28} onClick={openModal} />
-
         <div className='relative' ref={filterRef}>
           <BsFilter className='text-slate-400 mr-1 cursor-pointer' size={22} onClick={toggleDropdown} />
           {isDropdownOpen && (
@@ -76,13 +80,11 @@ export default function AuthenticatedAppbar({ currentUser }) {
                 <button onClick={() => filterIssues('status')}>Status</button>
                 <button onClick={() => filterIssues('priority')}>Priority</button>
                 <button onClick={() => filterIssues('dueDate')}>Due Date</button>
-                <button onClick={() => filterIssues('assignee')}>Assignee</button>
-                <button onClick={resetFilters} className="text-slate-300 hover:text-slate-100 transition">Reset Filters</button>
+                <button onClick={resetFilters} className="text-slate-300 hover:font-semibold hover:text-slate-100 transition">RESET</button>
               </div>
             </div>
           )}
         </div>
-
         <BsBell className='text-slate-400 mr-1' />
         <Link to='/profile'>
           <img 
