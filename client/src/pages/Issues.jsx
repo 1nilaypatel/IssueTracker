@@ -3,11 +3,11 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faCircle, faCog, faFlask, faCheckCircle, faExclamationCircle, faExclamationTriangle, faArrowUp, faArrowRight, faArrowDown, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
+import { fetchIssuesSuccess, updateFilteredIssues } from '../redux/user/userSlice.js';
 import UpdateIssue from './UpdateIssue.jsx';
 
 export default function Issues() {
-  const { issues } = useSelector((state) => state.user);
+  const issues = useSelector((state) => state.user.filteredIssues);
   const dispatch = useDispatch();
   const [clickedIssue, setClickedIssue] = useState(null);
 
@@ -23,6 +23,7 @@ export default function Issues() {
     try {
       const response = await axios.get('/server/issue/get');
       dispatch(fetchIssuesSuccess(response.data));
+      dispatch(updateFilteredIssues(response.data));
     } catch (error) {
       console.error('Error fetching issues:', error);
     }
@@ -73,7 +74,7 @@ export default function Issues() {
 
   return (
     <div className='text-slate-300 flex flex-col gap-2 p-4 justify-center'>
-      {issues.map((issue) => (
+      {issues && issues.map((issue) => (
         <div key={issue._id} className='bg-gray-800 p-3 rounded-md shadow-md hover:cursor-pointer' onClick={() => handleClickIssue(issue)}>
           <div className='flex justify-between items-center'>
             <div className='flex flex-row gap-2 items-center'>

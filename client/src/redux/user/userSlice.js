@@ -5,6 +5,7 @@ const initialState = {
   error: null,
   loading: false,
   issues: [],
+  filteredIssues: [],
   users: [],
 };
 
@@ -32,13 +33,20 @@ const userSlice = createSlice({
     },
     deleteIssuesSuccess: (state, action) => {
       state.issues = state.issues.filter((issue) => issue._id !== action.payload);
+      state.filteredIssues = state.filteredIssues.filter((issue) => issue._id != action.payload);
     },
     updateIssuesSuccess: (state, action) => {
       const updatedIssue = action.payload;
       state.issues = state.issues.map((issue) =>
         issue._id === updatedIssue._id ? updatedIssue : issue
       );
+      state.filteredIssues = state.filteredIssues.map((issue) => 
+        issue._id === updatedIssue._id ? updatedIssue : issue
+      );
     },
+    updateFilteredIssues: (state, action) => {
+      state.filteredIssues = action.payload;
+    }
   },
 });
 
@@ -50,6 +58,7 @@ export const {
   fetchUsersSuccess,
   deleteIssuesSuccess,
   updateIssuesSuccess,
+  updateFilteredIssues,
 } = userSlice.actions;
 
 export default userSlice.reducer;

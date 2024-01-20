@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IssueBox } from '../components';
-import { fetchIssuesSuccess } from '../redux/user/userSlice.js';
+import { fetchIssuesSuccess, updateFilteredIssues } from '../redux/user/userSlice.js';
 
 export default function CreateIssue({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ export default function CreateIssue({ isOpen, onClose }) {
         setError(createdIssue.message);
       } else {
         dispatch(fetchIssuesSuccess([...issues, createdIssue]));
+        dispatch(updateFilteredIssues([...issues, createdIssue]));
         resetAndClose();
         navigate('/issues');
       }
