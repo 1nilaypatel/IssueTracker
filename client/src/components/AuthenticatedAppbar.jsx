@@ -10,7 +10,9 @@ export default function AuthenticatedAppbar({ currentUser }) {
   const { issues } = useSelector((state) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const filterRef = useRef(null);
+  const notifiactionsRef = useRef(null);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -26,6 +28,14 @@ export default function AuthenticatedAppbar({ currentUser }) {
 
   const closeDropdown = () => {
     setIsDropdownOpen(false);
+  };
+
+  const toggleNotifications = () => {
+    setIsNotificationsOpen(!isNotificationsOpen);
+  };
+
+  const closeNotifications = () => {
+    setIsNotificationsOpen(false);
   };
 
   const filterIssues = (filter) => {
@@ -54,6 +64,9 @@ export default function AuthenticatedAppbar({ currentUser }) {
     const handleClickOutside = (event) => {
       if (filterRef.current && !filterRef.current.contains(event.target)) {
         closeDropdown();
+      }
+      if (notifiactionsRef.current && !notifiactionsRef.current.contains(event.target)) {
+        closeNotifications();
       }
     };
     document.addEventListener('click', handleClickOutside);
@@ -85,7 +98,15 @@ export default function AuthenticatedAppbar({ currentUser }) {
             </div>
           )}
         </div>
-        <BsBell className='text-slate-400 mr-1' />
+        <div className='relative' ref={notifiactionsRef}>
+          <BsBell className='text-slate-400 mr-1 cursor-pointer' onClick={toggleNotifications} />
+          {isNotificationsOpen && (
+            <div className='absolute bg-gray-900 rounded-md shadow-lg p-4 h-auto w-80 -right-4 text-slate-300'>
+              <div className="text-sm font-light mb-2">Notifications</div>
+              <button className="text-slate-300 hover:font-semibold hover:text-slate-100 transition">Clear all</button>
+            </div>
+          )}
+        </div>
         <Link to='/profile'>
           <img 
             className='rounded-full h-8 w-8 object-contain' 
