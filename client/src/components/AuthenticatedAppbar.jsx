@@ -5,7 +5,6 @@ import { CreateIssue } from '../pages';
 
 export default function AuthenticatedAppbar({ currentUser }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const filterRef = useRef(null);
 
@@ -15,10 +14,6 @@ export default function AuthenticatedAppbar({ currentUser }) {
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-
-  const handleFilterChange = (filter) => {
-    setSelectedFilter(filter);
   };
 
   const toggleDropdown = () => {
@@ -45,18 +40,11 @@ export default function AuthenticatedAppbar({ currentUser }) {
 
   return (
     <div className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
-      <ul className='flex gap-4'>
-        <Link to='/dashboard'>
-          <li className='text-slate-300 flex text-sm sm:text-base'>
-            Dashboard
-          </li>
-        </Link>
-        <Link to='/issues'>
-          <li className='text-slate-300 flex text-sm sm:text-base'>
-            Issues
-          </li>
-        </Link>
-      </ul>
+      <Link to='/issues'>
+        <li className='text-slate-300 flex text-sm sm:text-lg'>
+          Issues
+        </li>
+      </Link>
       <ul className='flex items-center gap-4'>
         <BsPlus className='text-slate-400 mr-1 cursor-pointer' size={28} onClick={openModal} />
 
@@ -75,9 +63,7 @@ export default function AuthenticatedAppbar({ currentUser }) {
           )}
         </div>
 
-        <Link to='/dashboard'>
-          <BsBell className='text-slate-400 mr-1' />
-        </Link>
+        <BsBell className='text-slate-400 mr-1' />
         <Link to='/profile'>
           <img 
             className='rounded-full h-8 w-8 object-contain' 

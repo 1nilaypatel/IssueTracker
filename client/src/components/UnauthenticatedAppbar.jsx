@@ -10,11 +10,6 @@ export default function UnauthenticatedAppbar() {
         </h1>
       </Link>
       <ul className='flex gap-4'>
-        <Link to='/features'>
-          <li className='text-slate-400 hover:underline'>
-            Features
-          </li>
-        </Link>
         <Link to='/sign-in'>
           <li className='text-slate-400 hidden sm:inline hover:underline'>
             Log In

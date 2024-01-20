@@ -25,7 +25,7 @@ export default function OAuth() {
       });
       const data = response.data;
       dispatch(signInSuccess(data));
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       console.log('Error proceeding with Google', error);
     }
