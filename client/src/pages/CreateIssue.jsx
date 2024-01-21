@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IssueBox } from '../components';
-import { fetchIssuesSuccess, fetchNotifiedUser, updateFilteredIssues } from '../redux/user/userSlice.js';
+import { fetchIssuesSuccess, fetchUsersSuccess, signInSuccess, updateFilteredIssues } from '../redux/user/userSlice.js';
 
 export default function CreateIssue({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -68,8 +68,11 @@ export default function CreateIssue({ isOpen, onClose }) {
             'Content-Type': 'application/json',
           },
         });
-        const user = await axios.get(`/server/user/${createdIssue.assigneeId}`);
-        dispatch(fetchNotifiedUser(user.data));
+        const usersResponse = await axios.get('/server/user');
+        const updatedUsers = usersResponse.data;
+        dispatch(fetchUsersSuccess(updatedUsers));
+        const updatedCurrentUser = updatedUsers.find(user => user._id === currentUser._id);
+        dispatch(signInSuccess(updatedCurrentUser));
         dispatch(fetchIssuesSuccess([...issues, createdIssue]));
         dispatch(updateFilteredIssues([...issues, createdIssue]));
         resetAndClose();

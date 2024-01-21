@@ -3,7 +3,8 @@ import { BsPlus, BsBell, BsFilter } from 'react-icons/bs';
 import { useState, useEffect, useRef } from 'react';
 import { CreateIssue } from '../pages';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFilteredIssues } from '../redux/user/userSlice.js';
+import { signInSuccess, updateFilteredIssues } from '../redux/user/userSlice.js';
+import axios from 'axios';
 
 export default function AuthenticatedAppbar() {
   const dispatch = useDispatch();
@@ -74,6 +75,18 @@ export default function AuthenticatedAppbar() {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
+  const fetchUser = async () => {
+    try{
+      const response = await axios.get(`/server/user/${currentUser._id}`);
+      dispatch(signInSuccess(response.data));
+    }catch{
+      console.error('Error fetching User', error);
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  },[]);
 
   return (
     <div className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
