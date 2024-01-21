@@ -73,7 +73,7 @@ export default function Issues() {
   };
 
   return (
-    <div className='text-slate-300 flex flex-col gap-2 p-4 justify-center'>
+    <div className='text-slate-300 flex flex-col gap-2 p-4 justify-center mt-14'>
       {issues.length === 0 ? (
         <div className='text-center mt-60 text-2xl font-semibold'>Click on + to create issues</div>
         ) : (
