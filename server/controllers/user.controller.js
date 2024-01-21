@@ -27,3 +27,15 @@ export const addNotification = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getCurrentUser = async (req, res, next) => {
+  const user = await User.findById(req.params.id, { password: 0 });
+  if(!user){
+    return next(errorHandler(404, "User not found"));
+  }
+  try{
+    res.status(200).json(user);
+  }catch(error){
+    next(error);
+  }
+}

@@ -5,9 +5,9 @@ import { CreateIssue } from '../pages';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFilteredIssues } from '../redux/user/userSlice.js';
 
-export default function AuthenticatedAppbar({ currentUser }) {
+export default function AuthenticatedAppbar() {
   const dispatch = useDispatch();
-  const { issues } = useSelector((state) => state.user);
+  const { issues, currentUser } = useSelector((state) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -103,7 +103,16 @@ export default function AuthenticatedAppbar({ currentUser }) {
           {isNotificationsOpen && (
             <div className='absolute bg-gray-900 rounded-md shadow-lg p-4 h-auto w-80 -right-4 text-slate-300'>
               <div className="text-sm font-light mb-2">Notifications</div>
-              <button className="text-slate-300 hover:font-semibold hover:text-slate-100 transition">Clear all</button>
+              <ul className="divide-y divide-slate-500">
+                {currentUser.notifications.map((notification) => (
+                  <li key={notification._id} className="py-2 line-clamp-3">
+                    {notification.message}
+                  </li>
+                ))}
+              </ul>
+              <button className="text-slate-300 hover:font-semibold hover:text-slate-100 transition">
+                Clear all
+              </button>
             </div>
           )}
         </div>

@@ -8,7 +8,7 @@ export default function Appbar() {
     <header className='bg-black shadow-md'>
       <div>
       {currentUser ? (
-        <AuthenticatedAppbar currentUser={currentUser} />
+        <AuthenticatedAppbar />
       ):(
         <UnauthenticatedAppbar />
       )}
