@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IssueBox } from '../components';
-import { fetchIssuesSuccess, signInSuccess, updateFilteredIssues } from '../redux/user/userSlice.js';
+import { fetchIssuesSuccess, fetchNotifiedUser, updateFilteredIssues } from '../redux/user/userSlice.js';
 
 export default function CreateIssue({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ export default function CreateIssue({ isOpen, onClose }) {
           },
         });
         const user = await axios.get(`/server/user/${createdIssue.assigneeId}`);
-        dispatch(signInSuccess(user.data));
+        dispatch(fetchNotifiedUser(user.data));
         dispatch(fetchIssuesSuccess([...issues, createdIssue]));
         dispatch(updateFilteredIssues([...issues, createdIssue]));
         resetAndClose();

@@ -7,6 +7,7 @@ const initialState = {
   issues: [],
   filteredIssues: [],
   users: [],
+  notifiedUser: null,
 };
 
 const userSlice = createSlice({
@@ -46,6 +47,9 @@ const userSlice = createSlice({
     },
     updateFilteredIssues: (state, action) => {
       state.filteredIssues = action.payload;
+    },
+    fetchNotifiedUser: (state, action) => {
+      state.notifiedUser = action.payload;
     }
   },
 });
@@ -59,6 +63,7 @@ export const {
   deleteIssuesSuccess,
   updateIssuesSuccess,
   updateFilteredIssues,
+  fetchNotifiedUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;

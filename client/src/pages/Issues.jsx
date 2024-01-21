@@ -74,54 +74,61 @@ export default function Issues() {
 
   return (
     <div className='text-slate-300 flex flex-col gap-2 p-4 justify-center'>
-      {issues && issues.map((issue) => (
-        <div key={issue._id} className='bg-gray-800 p-3 rounded-md shadow-md hover:cursor-pointer' onClick={() => handleClickIssue(issue)}>
-          <div className='flex justify-between items-center'>
-            <div className='flex flex-row gap-2 items-center'>
-              <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
-                {getPriorityIcon(issue.priority)}
-                {issue.priority}
-              </span>
-              <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
-                {getStatusIcon(issue.status)}
-                {issue.status}
-              </span>
-              <div className='text-sm md:text-base line-clamp-1'>{issue.issueTitle}</div>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <div className='flex flex-row items-center gap-1 hidden sm:inline'>
-                {issue.label.map((label) => (
-                  <span
-                    key={label}
-                    className='px-1 text-sm'
-                  >
-                    {label}
+      {issues.length === 0 ? (
+        <div className='text-center mt-60 text-2xl font-semibold'>Click on + to create issues</div>
+        ) : (
+          issues.map((issue) => (
+            <div 
+              key={issue._id} 
+              className='bg-gray-800 p-3 rounded-md shadow-md hover:cursor-pointer' 
+              onClick={() => handleClickIssue(issue)}
+            >
+              <div className='flex justify-between items-center'>
+                <div className='flex flex-row gap-2 items-center'>
+                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
+                    {getPriorityIcon(issue.priority)}
+                    {issue.priority}
                   </span>
-                ))}
-              </div>
-              <div className='text-sm flex flex-row gap-2 items-center'>
-                <div className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-0.5 hidden md:inline'>
-                  <FontAwesomeIcon
-                    icon={faCalendarAlt}
-                    className='text-red-500 mr-1'
-                  />
-                  {formatDate(issue.dueDate)}
+                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
+                    {getStatusIcon(issue.status)}
+                    {issue.status}
+                  </span>
+                  <div className='text-sm md:text-base line-clamp-1'>{issue.issueTitle}</div>
                 </div>
-                <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full hidden md:inline'>
-                  {formatDate(issue.createdAt)}
-                </div>
-                <div>
-                  <img
-                    src={issue.profilephoto}
-                    alt={`${issue.assignee}'s profile`}
-                    className='w-7 h-7 rounded-full object-contain'
-                  />
+                <div className='flex flex-row gap-2'>
+                  <div className='flex flex-row items-center gap-1 hidden sm:inline'>
+                    {issue.label.map((label) => (
+                      <span
+                        key={label}
+                        className='px-1 text-sm'
+                      >
+                        {label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className='text-sm flex flex-row gap-2 items-center'>
+                    <div className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-0.5 hidden md:inline'>
+                      <FontAwesomeIcon
+                        icon={faCalendarAlt}
+                        className='text-red-500 mr-1'
+                      />
+                      {formatDate(issue.dueDate)}
+                    </div>
+                    <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full hidden md:inline'>
+                      {formatDate(issue.createdAt)}
+                    </div>
+                    <div>
+                      <img
+                        src={issue.profilephoto}
+                        alt={`${issue.assignee}'s profile`}
+                        className='w-7 h-7 rounded-full object-contain'
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
+      )))}
       {clickedIssue && <UpdateIssue issue={clickedIssue} onClose={closeIssueBox} fetchIssues={fetchIssues} />}
     </div>
   );

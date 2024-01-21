@@ -104,7 +104,7 @@ export default function AuthenticatedAppbar() {
             <div className='absolute bg-gray-900 rounded-md shadow-lg p-4 h-auto w-80 -right-4 text-slate-300'>
               <div className="text-sm font-light mb-2">Notifications</div>
               <ul className="divide-y divide-slate-500">
-                {currentUser.notifications.map((notification) => (
+                {currentUser.notifications && currentUser.notifications.map((notification) => (
                   <li key={notification._id} className="py-2 line-clamp-3">
                     {notification.message}
                   </li>
