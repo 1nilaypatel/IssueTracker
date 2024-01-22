@@ -85,13 +85,13 @@ export default function Issues() {
             >
               <div className='flex justify-between items-center'>
                 <div className='flex flex-row gap-2 items-center'>
-                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
+                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-xs sm:text-sm'>
                     {getPriorityIcon(issue.priority)}
                     {issue.priority}
                   </span>
-                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-sm'>
+                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-xs sm:text-sm'>
                     {getStatusIcon(issue.status)}
-                    {issue.status}
+                    <span className='truncate'>{issue.status}</span>
                   </span>
                   <div className='text-sm md:text-base line-clamp-1'>{issue.issueTitle}</div>
                 </div>
