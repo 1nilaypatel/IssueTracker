@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { motion } from 'framer-motion';
+import { createIssue, filterByDueDate, filterByPriority, filterByStatus, issuesList, mobileView, notification } from '../assets/images';
 
 const Home = () => {
   return (
@@ -20,7 +20,7 @@ const Home = () => {
 
       <section className="bg-gray-950 rounded-lg p-8 shadow-md mb-8 mx-14 md:mx-32">
         <img
-          src="https://placekitten.com/600/400" 
+          src={issuesList}
           alt="Create Issues Screenshot"
           className="rounded-md shadow-md"
         />
@@ -41,7 +41,7 @@ const Home = () => {
         </h2>
         <div className="flex items-center justify-center mb-6">
           <img
-            src="https://placekitten.com/600/400" 
+            src={createIssue}
             alt="Create Issues Screenshot"
             className="rounded-md shadow-md"
           />
@@ -58,7 +58,7 @@ const Home = () => {
           </p>
           <div className="flex items-center justify-center mb-6">
             <img
-              src="https://placekitten.com/600/400" 
+              src={notification}
               alt="Create Issues Screenshot"
               className="rounded-md shadow-md"
             />
@@ -73,10 +73,15 @@ const Home = () => {
           </p>
           <div className="flex items-center justify-center mb-6">
             <img
-              src="https://placekitten.com/600/400" 
+              src={filterByPriority}
               alt="Create Issues Screenshot"
               className="rounded-md shadow-md"
             />
+            {/* <img
+              src={filterByStatus}
+              alt="Create Issues Screenshot"
+              className="rounded-md shadow-md"
+            /> */}
           </div>
         </section>
       </div>
@@ -92,7 +97,7 @@ const Home = () => {
         </div>
         <div className="flex items-center justify-center mb-6">
           <img
-            src="https://placekitten.com/600/400" 
+            src={filterByDueDate}
             alt="Create Issues Screenshot"
             className="rounded-md shadow-md"
           />
@@ -102,7 +107,7 @@ const Home = () => {
       <section className="flex flex-col lg:flex-row items-center rounded-lg p-8 shadow-md mb-8 mx-14 md:mx-32">
         <div className="flex items-center justify-center mb-6">
           <img
-            src="https://placekitten.com/600/400" 
+            src={mobileView}
             alt="Create Issues Screenshot"
             className="rounded-md shadow-md"
           />
