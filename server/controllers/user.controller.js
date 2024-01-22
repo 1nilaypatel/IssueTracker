@@ -39,3 +39,37 @@ export const getCurrentUser = async (req, res, next) => {
     next(error);
   }
 }
+
+export const deleteUser = async (req, res, next) => {
+  if(req.user.id !== req.params.id){
+    return next(errorHandler(401, "Cannot delete other's account"));
+  }
+  try{
+    await User.findByIdAndDelete(req.params.id);
+    res.clearCookie("access_token");
+    res.status(200).json("User account deleted");
+  }catch(error){
+    next(error);
+  }
+};
+
+export const updateUser = async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(errorHandler(401, "Unautharized to update others"));
+  }
+  const { username } = req.body;
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { username } },
+      { new: true }
+    );
+    if (!updateUser) {
+      return next(errorHandler(404, "User not found"));
+    }
+    const { password, ...rest } = updateUser._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
