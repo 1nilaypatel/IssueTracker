@@ -33,15 +33,15 @@
    ```bash
    git clone https://github.com/1nilaypatel/IssueTracker.git
 
-2. **Install NPM dependencies for server side:**
+2. **Install NPM dependencies (in root folder) for server side:**
     ```bash
     npm install
 
-3. **Start the server:**
+3. **Start the server (in root folder) :**
     ```bash
     npm run dev
 
-4. **Move to the Client Folder:**
+4. **Move to the Client Folder (in new terminal):**
     ```bash
     cd client
 
