@@ -1,13 +1,60 @@
+import axios from "axios";
 import { useState } from "react";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, logOutUserFailure, logOutUserStart, logOutUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice.js";
 
 export default function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
-  const[username, setUsername] = useState('');
-  const[loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const [formData, setFormData] = useState({
+    username: currentUser.username,
+  });
 
   const handleChange = (e) => {
-    setUsername(e.target.value);
+    setFormData({...formData, [e.target.id]: e.target.value});
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      dispatch(updateUserStart());
+      const response = await axios.post(`/server/user/update/${currentUser._id}`, formData);
+      if(response.data.success === false){
+        dispatch(updateUserFailure(response.data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(response.data));
+    }catch(error){
+      dispatch(updateUserFailure(error.message));
+    }
+  };
+
+  const handleDelete = async () => {
+    try{
+      dispatch(deleteUserStart());
+      const response = await axios.delete(`/server/user/delete/${currentUser._id}`);
+      if(response.data.success === false){
+        dispatch(deleteUserFailure(response.data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(response.data));
+    }catch(error){
+      dispatch(deleteUserFailure(error.message));
+    }
+  }
+
+  const handleLogout = async () => {
+    try{
+      dispatch(logOutUserStart());
+      const response = await axios.get("/server/auth/logout");
+      if(response.data.success === false){
+        dispatch(logOutUserFailure(response.data.message));
+        return;
+      }
+      dispatch(logOutUserSuccess(response.data));
+    }catch(error){
+      dispatch(logOutUserFailure(error.message));
+    }
   }
 
   return (
@@ -23,11 +70,13 @@ export default function Profile() {
           <p className="text-gray-500">{currentUser.email}</p>
         </div>
       </div>
-      <form className="flex flex-row gap-5 mb-12">
+      <form onSubmit={handleSubmit} className="flex flex-row gap-5">
         <input
           type='text'
+          id='username'
           placeholder='Enter your new username'
-          value={currentUser.username}
+          required
+          value={formData.username}
           className='rounded-md p-2 focus:border-indigo-400 text-black w-64'
           onChange={handleChange}
         />
@@ -38,16 +87,18 @@ export default function Profile() {
           {loading ? "Updating..." : "Update Username"}
         </button>
       </form>
+      <p className='text-red-500 font-medium sm:font-semibold mt-1 mb-11'>{error ? error : ''}</p>
       <h2 className="text-2xl font-semibold mb-4">User Activity</h2>
       <div className="flex flex-col gap-2 text-gray-500">
-          <p>Total Issues Created: </p>
-          <p>Total Issues Assigned: </p>
+          <p>Total Issues Created: {currentUser.issuesCreated}</p>
+          {/* <p>Total Issues Assigned: </p> */}
+          {/* for assigned i also need to check when the assignee is updated */}
       </div>
       <div className="mt-5 flex justify-between">
-        <span className="text-red-500 cursor-pointer font-medium sm:font-semibold">
+        <span onClick={handleDelete} className="text-red-500 cursor-pointer font-medium sm:font-semibold">
           Delete account
         </span>
-        <span className="text-red-500 cursor-pointer font-medium sm:font-semibold">
+        <span onClick={handleLogout} className="text-red-500 cursor-pointer font-medium sm:font-semibold">
           Log out
         </span>
       </div>
