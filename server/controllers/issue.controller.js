@@ -1,9 +1,11 @@
 import Issue from "../models/issue.model.js";
+import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const createIssue = async (req, res, next) => {
   try{
     const issue = await Issue.create(req.body);
+    await User.findByIdAndUpdate(req.user.id, { $inc: { issuesCreated: 1 } });
     return res.status(201).json(issue);
   }catch(error){
     next(error);
