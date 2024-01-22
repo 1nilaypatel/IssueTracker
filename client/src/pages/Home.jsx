@@ -12,7 +12,7 @@ const Home = () => {
         </p>
         <Link to={'/sign-up'}>
           <span className='bg-indigo-500 text-sm md:text-base text-slate-300 p-3 rounded-md hover:bg-opacity-90 focus:outline-none'>
-            Get Started with IssueTracker
+            Get Started Now
           </span>
         </Link>
       </header>
@@ -122,18 +122,21 @@ const Home = () => {
       </section>
 
       <section className="bg-slate-600 flex flex-col lg:flex-row items-center p-24 shadow-2xl mb-8 gap-20">
-        <h2 className="text-4xl md:text-6xl font-semibold mb-4 ml-5">
-        Swat bugs before<br/>they know what hit them!
-        </h2>
-        <Link to={'/sign-up'}>
-          <span className='bg-indigo-500 text-sm md:text-lg text-slate-300 p-4  ml-5 rounded-md hover:bg-opacity-90 focus:outline-none'>
-            Get Started with IssueTracker
-          </span>
-        </Link>
+        <div className="text-center lg:text-left lg:w-2/3">
+          <h2 className="text-4xl md:text-6xl font-semibold mb-4">
+            Swat bugs before<br />they know what hit them!
+          </h2>
+        </div>
+        <div className="text-center lg:text-left lg:w-1/3">
+          <Link to={'/sign-up'}>
+            <span className='bg-indigo-500 text-sm md:text-lg text-slate-300 p-4 ml-5 rounded-md hover:bg-opacity-90 focus:outline-none'>
+              Get Started Now
+            </span>
+          </Link>
+        </div>
       </section>
 
       <p className='text-center font-thin mb-6'>© 2024, by Nilay Patel, All Rights Reserved</p>
-
     </div>
   );
 };
