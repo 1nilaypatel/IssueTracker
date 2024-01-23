@@ -1,7 +1,22 @@
 import { Link } from 'react-router-dom';
 import { createIssue, filterByDueDate, filterByPriority, filterByStatus, issuesList, mobileView, notification } from '../assets/images';
+import { motion, useAnimation } from 'framer-motion';
 
-const Home = () => {
+export default function Home(){
+  const GetStartedButton = () => {
+    return(
+      <Link to={'/sign-up'}>
+        <motion.button 
+          className='bg-indigo-500 text-sm md:text-lg text-slate-100 p-3 rounded-md hover:bg-opacity-90 focus:outline-none'
+          whileHover={{ scale: 1.05, }}
+          transition={{ duration: 0.150, ease:"easeInOut"}}
+        >
+          Get Started Now
+        </motion.button>
+      </Link>
+    )
+  }
+
   return (
     <div className="text-slate-300 min-h-screen flex flex-col justify-center mt-20">
       <header className="text-left mb-8 min-h-64 md:min-h-80 my-16 md:my-32 mx-14 md:mx-32">
@@ -10,14 +25,12 @@ const Home = () => {
         <p className="text-gray-400 text-sm md:text-base mb-8">
           A simple, fast, and scalable bug tracking system that helps<br/>manage bugs easily and deliver great products on time.
         </p>
-        <Link to={'/sign-up'}>
-          <span className='bg-indigo-500 text-sm md:text-base text-slate-300 p-3 rounded-md hover:bg-opacity-90 focus:outline-none'>
-            Get Started Now
-          </span>
-        </Link>
+        <GetStartedButton />
       </header>
 
-      <section className="bg-gray-700 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 mx-auto text-center">
+      <section 
+        className="bg-gray-700 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 mx-auto text-center"
+      >
         <img
           src={issuesList}
           alt="Issues List img"
@@ -34,7 +47,12 @@ const Home = () => {
         </p>
       </section>
 
-      <section className="flex flex-col items-center bg-slate-950 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 mx-auto">
+      <motion.section 
+        className="flex flex-col items-center bg-slate-950 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 mx-auto"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+      >
         <h2 className="text-4xl md:text-6xl font-semibold mb-6">
           Issue tracking<br/>you’ll enjoy using
         </h2>
@@ -45,10 +63,15 @@ const Home = () => {
             className="rounded-md shadow-2xl h-auto md:w-7/12 md:my-7"
           />
         </div>
-      </section>
+      </motion.section>
 
       <div className='flex flex-col lg:flex-row gap-3 lg:gap-7 mx-14 md:mx-32'>
-        <section className="bg-gray-600 bg-opacity-50 rounded-lg p-8 shadow-2xl mb-8 lg:w-1/2">
+        <motion.section
+          className="bg-gray-600 bg-opacity-50 rounded-lg p-8 shadow-2xl mb-8 lg:w-1/2"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Stay in the loop! 
           </h2>
@@ -62,8 +85,13 @@ const Home = () => {
               className="rounded-md shadow-2xl md:h-96 lg:h-fit"
             />
           </div>
-        </section>
-        <section className="bg-gray-600 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 lg:w-1/2">
+        </motion.section>
+        <motion.section 
+          className="bg-gray-600 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 lg:w-1/2"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 3 }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Make it yours
           </h2>
@@ -82,10 +110,15 @@ const Home = () => {
               className="rounded-md shadow-2xl md:h-96 lg:h-fit"
             />
           </div>
-        </section>
+        </motion.section>
       </div>
 
-      <section className="flex flex-col lg:flex-row items-center bg-gray-700 rounded-lg p-8 shadow-2xl mb-8 mx-14 md:mx-32">
+      <motion.section 
+        className="flex flex-col lg:flex-row items-center bg-gray-700 rounded-lg p-8 shadow-2xl mb-8 mx-14 md:mx-32"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 3 }}
+      >
         <div className='lg:w-2/3 mb-7'>
           <h2 className="text-4xl md:text-6xl font-semibold mb-4">
             Time tracking
@@ -101,14 +134,19 @@ const Home = () => {
             className="rounded-md shadow-2xl md:h-96 lg:h-fit lg:mr-12"
           />
         </div>
-      </section>
+      </motion.section>
 
-      <section className="flex flex-col lg:flex-row items-center rounded-lg p-8 shadow-2xl mb-8 md:mx-32">
+      <section 
+        className="flex flex-col lg:flex-row items-center rounded-lg p-8 shadow-2xl mb-8 md:mx-32"
+      >
         <div className="flex items-center justify-center mb-6 lg:w-2/5 order-2 lg:order-1">
-          <img
+          <motion.img
             src={mobileView}
             alt="Mobile View img"
             className="rounded-md h-96 md:h-96 lg:h-fit"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 4 }}
           />
         </div>
         <div className='lg:w-2/3 p-9 order-1 lg:order-2'>
@@ -128,11 +166,7 @@ const Home = () => {
           </h2>
         </div>
         <div className="text-center lg:text-left lg:w-1/3">
-          <Link to={'/sign-up'}>
-            <span className='bg-indigo-500 text-sm md:text-lg text-slate-300 p-4 ml-5 rounded-md hover:bg-opacity-90 focus:outline-none'>
-              Get Started Now
-            </span>
-          </Link>
+        <GetStartedButton />
         </div>
       </section>
 
@@ -140,5 +174,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;
