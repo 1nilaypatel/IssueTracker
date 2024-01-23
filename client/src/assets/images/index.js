@@ -5,6 +5,7 @@ import filterByStatus from './filterByStatus.png';
 import issuesList from './issuesList.png';
 import mobileView from './mobileView.png';
 import notification from './notification.png';
+import homePageBug from './homePageBug.png';
 
 
-export {createIssue, filterByDueDate, filterByPriority, filterByStatus, issuesList, mobileView, notification};
+export {createIssue, filterByDueDate, filterByPriority, filterByStatus, issuesList, mobileView, notification, homePageBug};

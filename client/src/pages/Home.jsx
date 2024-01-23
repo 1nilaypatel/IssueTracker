@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { createIssue, filterByDueDate, filterByPriority, filterByStatus, issuesList, mobileView, notification } from '../assets/images';
-import { motion, useAnimation } from 'framer-motion';
+import { createIssue, filterByDueDate, filterByPriority, filterByStatus, homePageBug, issuesList, mobileView, notification } from '../assets/images';
+import { motion } from 'framer-motion';
 
 export default function Home(){
   const GetStartedButton = () => {
@@ -19,13 +19,22 @@ export default function Home(){
 
   return (
     <div className="text-slate-300 min-h-screen flex flex-col justify-center mt-20">
-      <header className="text-left mb-8 min-h-64 md:min-h-80 my-16 md:my-32 mx-14 md:mx-32">
-        <h1 className="text-3xl md:text-6xl font-bold mb-4">Ship great software with</h1>
-        <h1 className="text-3xl md:text-6xl font-bold mb-8">IssueTracker</h1>
-        <p className="text-gray-400 text-sm md:text-base mb-8">
-          A simple, fast, and scalable bug tracking system that helps<br/>manage bugs easily and deliver great products on time.
-        </p>
-        <GetStartedButton />
+
+      <header className="text-left mb-8 min-h-64 md:min-h-80 my-16 md:my-32 mx-14 md:mx-32 flex flex-row items-center">
+        <div className="md:mr-20">
+          <h1 className="text-3xl md:text-6xl font-bold mb-4">Ship great software with</h1>
+          <h1 className="text-3xl md:text-6xl font-bold mb-8">IssueTracker</h1>
+          <p className="text-gray-400 text-sm md:text-base mb-8">
+            A simple, fast, and scalable bug tracking system that helps<br />manage bugs easily and deliver great products on time.
+          </p>
+          <GetStartedButton />
+        </div>
+        <img
+          src={homePageBug}
+          alt="Issues List img"
+          className="h-96 hidden lg:block"
+          style={{ filter: 'invert(100%)' }}
+        />
       </header>
 
       <section 
@@ -38,41 +47,53 @@ export default function Home(){
         />
       </section>
 
-      <section className="p-8 shadow-2xl mb-8 mx-auto">
-        <h2 className="text-3xl md:text-5xl font-semibold mb-7">
-          The issue tracker<br/>built to deliver<br/>issue-free software!
+      <section className="flex flex-col gap-4 p-8 mb-8 mx-auto">
+        <h2 className="text-3xl md:text-5xl font-semibold">
+          The issue tracker
         </h2>
-        <p className="text-gray-400 text-sm md:text-xl mb-4">
+        <h2 className="text-3xl md:text-5xl font-semibold">
+          built to deliver
+        </h2>
+        <h2 className="text-3xl md:text-5xl font-semibold">
+          issue-free software!
+        </h2>
+        <p className="text-gray-400 text-base md:text-2xl mb-4">
           Submit, track and fix your bugs faster in our<br/> free bug tracking tool with the help of<br/> easy creation, assigning and tracking issues.
         </p>
       </section>
 
-      <motion.section 
+      <section 
         className="flex flex-col items-center bg-slate-950 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 mx-auto"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 2 }}
       >
-        <h2 className="text-4xl md:text-6xl font-semibold mb-6">
-          Issue tracking<br/>you’ll enjoy using
-        </h2>
+        <motion.h2 
+          className="text-4xl md:text-8xl mb-6 text-center"
+          initial={{ opacity: 0, scale: 0, y: 0 }}
+          animate={{ scale: 1, y:[50, 40, 30, 20, 10, 0] }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 2, ease:"backInOut", times:[0, 0.166, 0.332, 0.498, 0.664, 1] }}
+        >
+          Issue tracking<br/>you{"’"}ll enjoy using
+        </motion.h2>
         <div className="flex items-center justify-center mb-6">
-          <img
+          <motion.img
             src={createIssue}
             alt="Create Issue img"
             className="rounded-md shadow-2xl h-auto md:w-7/12 md:my-7"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 3 }}
           />
         </div>
-      </motion.section>
+      </section>
 
       <div className='flex flex-col lg:flex-row gap-3 lg:gap-7 mx-14 md:mx-32'>
         <motion.section
-          className="bg-gray-600 bg-opacity-50 rounded-lg p-8 shadow-2xl mb-8 lg:w-1/2"
+          className="bg-gray-600 bg-opacity-50 rounded-lg p-14 shadow-2xl mb-8 lg:w-1/2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold mb-7">
             Stay in the loop! 
           </h2>
           <p className="text-gray-400 text-sm md:text-base mb-7">
@@ -87,12 +108,12 @@ export default function Home(){
           </div>
         </motion.section>
         <motion.section 
-          className="bg-gray-600 bg-opacity-30 rounded-lg p-8 shadow-2xl mb-8 lg:w-1/2"
+          className="bg-gray-600 bg-opacity-30 rounded-lg p-14 shadow-2xl mb-8 lg:w-1/2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 3 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold mb-7">
             Make it yours
           </h2>
           <p className="text-gray-400 text-sm md:text-base mb-7">
@@ -127,17 +148,22 @@ export default function Home(){
             Effortlessly manage your project timelines with our intuitive time tracking feature.<br/> Track the creation and due dates of each issue, and easily filter your tasks<br/> based on due dates to prioritize your work efficiently.
           </p>
         </div>
-        <div className="flex items-center justify-center mb-6 lg:w-1/3">
+        <motion.div 
+          className="flex items-center justify-center mb-6 lg:w-1/3"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 3 }}
+        >
           <img
             src={filterByDueDate}
             alt="Filter By Due Date img"
             className="rounded-md shadow-2xl md:h-96 lg:h-fit lg:mr-12"
           />
-        </div>
+        </motion.div>
       </motion.section>
 
       <section 
-        className="flex flex-col lg:flex-row items-center rounded-lg p-8 shadow-2xl mb-8 md:mx-32"
+        className="flex flex-col lg:flex-row items-center rounded-lg p-8 mb-8 md:mx-32"
       >
         <div className="flex items-center justify-center mb-6 lg:w-2/5 order-2 lg:order-1">
           <motion.img
@@ -151,7 +177,7 @@ export default function Home(){
         </div>
         <div className='lg:w-2/3 p-9 order-1 lg:order-2'>
           <h2 className="text-4xl md:text-6xl font-semibold mb-7">
-          Bug tracking,<br/>at your fingertips
+            Bug tracking,<br/>at your fingertips
           </h2>
           <p className="text-gray-400 text-sm md:text-base">
             Experience bug tracking seamlessly, whether you're at your desk or on the go. Our responsive design ensures a smooth bug tracking experience on your desktop, tablet, or mobile device. Track and manage issues effortlessly, right at your fingertips.
