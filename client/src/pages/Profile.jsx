@@ -58,10 +58,10 @@ export default function Profile() {
   }
 
   return (
-    <div className="text-gray-300 p-6 max-w-lg mx-auto mt-40 flex flex-col">
+    <div className="text-gray-300 p-6 max-w-lg mx-auto mt-40 flex flex-col justify-center">
       <div className="flex items-center justify-center mb-12">
         <img 
-          className="rounded-full h-28 w-28 object-contain mr-4" 
+          className="rounded-full h-auto w-auto sm:h-28 sm:w-28 object-contain mr-4" 
           src={currentUser.profilephoto} 
           alt="profile" 
         />
@@ -70,24 +70,24 @@ export default function Profile() {
           <p className="text-gray-500">{currentUser.email}</p>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-row gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-row gap-5 mx-auto">
         <input
           type='text'
           id='username'
           placeholder='Enter your new username'
           required
           value={formData.username}
-          className='rounded-md p-2 focus:border-indigo-400 text-black w-64'
+          className='rounded-md p-2 focus:border-indigo-400 text-black w-40 sm:w-64'
           onChange={handleChange}
         />
         <button 
           disabled={loading}
-          className="bg-indigo-500 text-slate-300 p-2 rounded-md hover:bg-opacity-90 focus:outline-none"
+          className="bg-indigo-500 text-slate-300 p-2 rounded-md hover:bg-opacity-90 focus:outline-none text-sm sm:text-base"
         >
           {loading ? "Updating..." : "Update Username"}
         </button>
       </form>
-      <p className='text-red-500 font-medium sm:font-semibold mt-1 mb-11'>{error ? error : ''}</p>
+      <p className='text-red-500 font-medium sm:font-semibold mt-1 mb-11 mx-auto'>{error ? error : ''}</p>
       <h2 className="text-2xl font-semibold mb-4">User Activity</h2>
       <div className="flex flex-col gap-2 text-gray-500">
           <p>Total Issues Created: {currentUser.issuesCreated}</p>
@@ -95,10 +95,10 @@ export default function Profile() {
           {/* for assigned i also need to check when the assignee is updated */}
       </div>
       <div className="mt-5 flex justify-between">
-        <span onClick={handleDelete} className="text-red-500 cursor-pointer font-medium sm:font-semibold">
+        <span onClick={handleDelete} className="text-red-500 cursor-pointer font-base sm:font-semibold">
           Delete account
         </span>
-        <span onClick={handleLogout} className="text-red-500 cursor-pointer font-medium sm:font-semibold">
+        <span onClick={handleLogout} className="text-red-500 cursor-pointer font-base sm:font-semibold">
           Log out
         </span>
       </div>

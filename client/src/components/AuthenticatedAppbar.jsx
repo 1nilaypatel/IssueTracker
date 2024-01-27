@@ -91,7 +91,7 @@ export default function AuthenticatedAppbar() {
   return (
     <div className='flex justify-between items-center p-3 max-w-6xl mx-auto'>
       <Link to='/issues'>
-        <li className='text-slate-300 flex text-sm sm:text-lg'>
+        <li className='text-slate-300 flex text-base sm:text-xl'>
           Issues
         </li>
       </Link>

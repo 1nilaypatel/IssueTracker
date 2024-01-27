@@ -85,36 +85,36 @@ export default function Issues() {
             >
               <div className='flex justify-between items-center'>
                 <div className='flex flex-row gap-2 items-center'>
-                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-xs sm:text-sm'>
+                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1'>
                     {getPriorityIcon(issue.priority)}
-                    {issue.priority}
+                    <span className='hidden sm:inline text-xs sm:text-sm'>{issue.priority}</span>
                   </span>
-                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1 text-xs sm:text-sm'>
+                  <span className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-1'>
                     {getStatusIcon(issue.status)}
-                    <span className='truncate'>{issue.status}</span>
+                    <span className='hidden sm:inline truncate text-xs sm:text-sm'>{issue.status}</span>
                   </span>
-                  <div className='text-sm md:text-base line-clamp-1'>{issue.issueTitle}</div>
+                  <div className='text-sm lg:text-base line-clamp-1'>{issue.issueTitle}</div>
                 </div>
                 <div className='flex flex-row gap-2'>
-                  <div className='flex flex-row items-center gap-1 hidden sm:inline'>
+                  <div className='flex flex-row items-center gap-1 line-clamp-1'>
                     {issue.label.map((label) => (
                       <span
                         key={label}
-                        className='px-1 text-sm'
+                        className='px-1 text-sm hidden sm:inline'
                       >
                         {label}
                       </span>
                     ))}
                   </div>
                   <div className='text-sm flex flex-row gap-2 items-center'>
-                    <div className='bg-gray-900 px-2 py-0.5 rounded-full flex items-center gap-0.5 hidden md:inline'>
+                    <div className='md:bg-gray-900 md:px-2 md:py-0.5 rounded-full flex items-center md:gap-0.5 truncate'>
                       <FontAwesomeIcon
                         icon={faCalendarAlt}
-                        className='text-red-500 mr-1'
+                        className='text-red-500 mr-1 hidden md:inline'
                       />
-                      {formatDate(issue.dueDate)}
+                      <span className='hidden md:inline'>{formatDate(issue.dueDate)}</span>
                     </div>
-                    <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full hidden md:inline'>
+                    <div className='text-slate-400 bg-gray-900 px-2 py-0.5 rounded-full hidden lg:inline'>
                       {formatDate(issue.createdAt)}
                     </div>
                     <div>

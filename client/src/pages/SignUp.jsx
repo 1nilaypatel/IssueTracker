@@ -31,7 +31,6 @@ export default function SignUp() {
           },
         });
         const data = response.data;
-        // console.log(data);
         if (data.success === false) {
           setLoading(false);
           setError(data.message);
@@ -48,7 +47,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-48">
+    <div className="max-w-sm mx-auto mt-48 p-6 lg:p-2">
       <h1 className='text-slate-300 text-center text-xl mb-8'>
         Create your IssueTracker account
       </h1>
