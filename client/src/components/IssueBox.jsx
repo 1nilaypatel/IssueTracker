@@ -24,6 +24,15 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
     fetchUsers();
   }, [dispatch]);
 
+  const formatDueDate = (date) => {
+    if (!date) return 'DD/MM/YYYY';
+    const parsedDate = new Date(date);
+    const day = parsedDate.getDate().toString().padStart(2, '0');
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = parsedDate.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+  
   return (
     <>
       <div className='flex items-center justify-between mb-4'>
@@ -54,10 +63,10 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
         <select
           id='status'
           className='bg-gray-700 text-slate-200 rounded-sm py-1 focus:outline-none w-32'
-          value={initialData.status}
+          value={initialData.status || ''}
           onChange={(e) => handleIssueDataChange({...initialData, status: e.target.value})}
         >
-          <option value=''>Change Status</option>
+          <option value='' disabled hidden>Change Status</option>
           <option value='Open'>Open</option>
           <option value='In Progress'>In Progress</option>
           <option value='To be Tested'>To be Tested</option>
@@ -67,10 +76,10 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
         <select
           id='priority'
           className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-28'
-          value={initialData.priority}
+          value={initialData.priority || ''}
           onChange={(e) => handleIssueDataChange({...initialData, priority: e.target.value})}
         >
-          <option value=''>Set Priority</option>
+          <option value='' disabled hidden>Set Priority</option>
           <option value='Urgent'>Urgent</option>
           <option value='High'>High</option>
           <option value='Medium'>Medium</option>
@@ -79,7 +88,7 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
         <select
           id='assignee'
           className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-36'
-          value={initialData.assigneeId}
+          value={initialData.assigneeId || ''}
           onChange={(e) =>
             handleIssueDataChange({
               ...initialData,
@@ -89,7 +98,7 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
             })
           }
         >
-          <option value=''>Assignee</option>
+          <option value='' disabled hidden>Assignee</option>
           {users && users.map((user) => (
             <option key={user._id} value={user._id}>
               {user.username}
@@ -115,7 +124,7 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
           className="bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-28"
           placeholder="Due Date"
           required
-          value={initialData.dueDate}
+          value={title === 'Update Issue' ? formatDueDate(initialData.dueDate) : initialData.dueDate}
           onChange={(e) => handleIssueDataChange({...initialData, dueDate: e.target.value})}
           onFocus={(e) => {
             e.target.type = "date";

@@ -30,18 +30,27 @@ export default function UpdateIssue({ issue, onClose, fetchIssues }) {
     setIssueData(newIssueData);
   };
 
+  const requiredFields = () => {
+    const{issueTitle, status, priority, assignee, dueDate} = issueData;
+    return issueTitle && status && priority && assignee && dueDate;
+  }
+
   const handleUpdate = async () => {
-    try {
-      setIsUpdateLoading(true);
-      setError(false);
-      const response = await axios.put(`/server/issue/update/${issue._id}`, issueData);
-      dispatch(updateIssuesSuccess([response.data]));
-      setIsUpdateLoading(false);
-      resetAndClose();
-      fetchIssues();
-    } catch (error) {
-      setError(error.response.data.message);
-      setIsUpdateLoading(false);
+    if(requiredFields()){
+      try {
+        setIsUpdateLoading(true);
+        setError(false);
+        const response = await axios.put(`/server/issue/update/${issue._id}`, issueData);
+        dispatch(updateIssuesSuccess([response.data]));
+        setIsUpdateLoading(false);
+        resetAndClose();
+        fetchIssues();
+      } catch (error) {
+        setError(error.response.data.message);
+        setIsUpdateLoading(false);
+      }
+    }else{
+      setError("All fields are required! Only Description, Labels are optional");
     }
   };
 

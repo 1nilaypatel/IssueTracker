@@ -43,45 +43,54 @@ export default function CreateIssue({ isOpen, onClose }) {
     setIssueData(newIssueData);
   };
 
+  const requiredFields = () => {
+    const{issueTitle, status, priority, assignee, dueDate} = issueData;
+    return issueTitle && status && priority && assignee && dueDate;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setIsLoading(true);
-      setError(true);
-      const response = await axios.post("/server/issue/create", {
-        ...issueData,
-        userRef: currentUser._id,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const createdIssue = response.data;
-      setIsLoading(false);
-      if (createdIssue.success === false) {
-        setError(createdIssue.message);
-      } else {
-        const notificationMessage = `New issue "${createdIssue.issueTitle}" assigned to you.`;
-        await axios.post(`/server/user/add-notification/${createdIssue.assigneeId}`, {
-          message: notificationMessage,
+    if(requiredFields()){
+      try {
+        setIsLoading(true);
+        setError(true);
+        const response = await axios.post("/server/issue/create", {
+          ...issueData,
+          userRef: currentUser._id,
         }, {
           headers: {
             'Content-Type': 'application/json',
           },
         });
-        const usersResponse = await axios.get('/server/user');
-        const updatedUsers = usersResponse.data;
-        dispatch(fetchUsersSuccess(updatedUsers));
-        const updatedCurrentUser = updatedUsers.find(user => user._id === currentUser._id);
-        dispatch(signInSuccess(updatedCurrentUser));
-        dispatch(fetchIssuesSuccess([...issues, createdIssue]));
-        dispatch(updateFilteredIssues([...issues, createdIssue]));
-        resetAndClose();
-        navigate('/issues');
+        const createdIssue = response.data;
+        setIsLoading(false);
+        if (createdIssue.success === false) {
+          setError(createdIssue.message);
+        } else {
+          const notificationMessage = `New issue "${createdIssue.issueTitle}" assigned to you.`;
+          await axios.post(`/server/user/add-notification/${createdIssue.assigneeId}`, {
+            message: notificationMessage,
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const usersResponse = await axios.get('/server/user');
+          const updatedUsers = usersResponse.data;
+          dispatch(fetchUsersSuccess(updatedUsers));
+          const updatedCurrentUser = updatedUsers.find(user => user._id === currentUser._id);
+          dispatch(signInSuccess(updatedCurrentUser));
+          dispatch(fetchIssuesSuccess([...issues, createdIssue]));
+          dispatch(updateFilteredIssues([...issues, createdIssue]));
+          resetAndClose();
+          navigate('/issues');
+        }
+      } catch (error) {
+        setError(error.response.data.message);
+        setIsLoading(false);
       }
-    } catch (error) {
-      setError(error.response.data.message);
-      setIsLoading(false);
+    }else{
+      setError("All fields are required! Only Description, Labels are optional");
     }
   };
 
