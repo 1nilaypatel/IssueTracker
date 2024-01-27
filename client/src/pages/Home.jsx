@@ -21,9 +21,9 @@ export default function Home(){
     <div className="text-slate-300 min-h-screen flex flex-col justify-center mt-20">
 
       <header className="text-left mb-8 min-h-64 md:min-h-80 my-16 md:my-32 mx-14 md:mx-32 flex flex-row items-center">
-        <div className="md:mr-20">
-          <h1 className="text-3xl md:text-6xl font-bold mb-4">Ship great software with</h1>
-          <h1 className="text-3xl md:text-6xl font-bold mb-8">IssueTracker</h1>
+        <div className="md:mr-40">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">Ship great software</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-8">with IssueTracker</h1>
           <p className="text-gray-400 text-sm md:text-base mb-8">
             A simple, fast, and scalable bug tracking system that helps<br />manage bugs easily and deliver great products on time.
           </p>
@@ -86,9 +86,9 @@ export default function Home(){
         </div>
       </section>
 
-      <div className='flex flex-col lg:flex-row gap-3 lg:gap-7 mx-14 md:mx-32'>
+      <div className='flex flex-col lg:flex-row gap-3 lg:gap-7 mx-10 md:mx-32'>
         <motion.section
-          className="bg-gray-600 bg-opacity-50 rounded-lg p-14 shadow-2xl mb-8 lg:w-1/2"
+          className="bg-gray-600 bg-opacity-50 rounded-lg p-8 lg:p-14 shadow-2xl mb-8 lg:w-1/2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -108,7 +108,7 @@ export default function Home(){
           </div>
         </motion.section>
         <motion.section 
-          className="bg-gray-600 bg-opacity-30 rounded-lg p-14 shadow-2xl mb-8 lg:w-1/2"
+          className="bg-gray-600 bg-opacity-30 rounded-lg p-8 lg:p-14 shadow-2xl mb-8 lg:w-1/2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 3 }}
@@ -135,7 +135,7 @@ export default function Home(){
       </div>
 
       <motion.section 
-        className="flex flex-col lg:flex-row items-center bg-gray-700 rounded-lg p-8 shadow-2xl mb-8 mx-14 md:mx-32"
+        className="flex flex-col lg:flex-row items-center bg-gray-700 rounded-lg p-8 shadow-2xl mb-8 mx-10 md:mx-32"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 3 }}
