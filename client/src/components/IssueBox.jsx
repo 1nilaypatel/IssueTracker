@@ -7,26 +7,9 @@ import { AiOutlineClose } from 'react-icons/ai';
 export default function IssueBox({ initialData, title, onClose, onIssueDataChange }){
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
-  const [issueData, setIssueData] = useState(initialData);
 
   const handleIssueDataChange = (newIssueData) => {
-    setIssueData(newIssueData);
     onIssueDataChange(newIssueData);
-  };
-
-  const resetAndClose = () => {
-    setIssueData({
-      issueTitle: '',
-      description: '',
-      status: '',
-      priority: '',
-      assignee: '',
-      label: [],
-      dueDate: '',
-      profilephoto: '',
-      assigneeId: '',
-    });
-    onClose();
   };
 
   useEffect(() => {
@@ -45,7 +28,7 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
     <>
       <div className='flex items-center justify-between mb-4'>
         <h2 className='text-md font-lg text-slate-200'>{title}</h2>
-        <AiOutlineClose className='text-slate-300 cursor-pointer' size={25} onClick={resetAndClose} />
+        <AiOutlineClose className='text-slate-300 cursor-pointer' size={25} onClick={onClose} />
       </div>
       <div className='mb-4'>
         <input
@@ -54,8 +37,8 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
           className='bg-gray-900 text-slate-200 text-xl py-2 w-full focus:outline-none'
           placeholder='Issue title'
           required
-          value={issueData.issueTitle}
-          onChange={(e) => handleIssueDataChange({...issueData, issueTitle: e.target.value})}
+          value={initialData.issueTitle}
+          onChange={(e) => handleIssueDataChange({...initialData, issueTitle: e.target.value})}
         />
       </div>
       <div className='mb-4'>
@@ -63,16 +46,16 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
           id='description'
           className='bg-gray-900 text-slate-200 text-base py-2 w-full focus:outline-none'
           placeholder='Add description...'
-          value={issueData.description}
-          onChange={(e) => handleIssueDataChange({...issueData, description: e.target.value})}
+          value={initialData.description}
+          onChange={(e) => handleIssueDataChange({...initialData, description: e.target.value})}
         />
       </div>
       <div className='flex flex-col sm:flex-row sm:items-center justify-start gap-2 mb-4 text-sm'>
         <select
           id='status'
           className='bg-gray-700 text-slate-200 rounded-sm py-1 focus:outline-none w-32'
-          value={issueData.status}
-          onChange={(e) => handleIssueDataChange({...issueData, status: e.target.value})}
+          value={initialData.status}
+          onChange={(e) => handleIssueDataChange({...initialData, status: e.target.value})}
         >
           <option value=''>Change Status</option>
           <option value='Open'>Open</option>
@@ -84,8 +67,8 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
         <select
           id='priority'
           className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-28'
-          value={issueData.priority}
-          onChange={(e) => handleIssueDataChange({...issueData, priority: e.target.value})}
+          value={initialData.priority}
+          onChange={(e) => handleIssueDataChange({...initialData, priority: e.target.value})}
         >
           <option value=''>Set Priority</option>
           <option value='Urgent'>Urgent</option>
@@ -96,10 +79,10 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
         <select
           id='assignee'
           className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-36'
-          value={issueData.assigneeId}
+          value={initialData.assigneeId}
           onChange={(e) =>
             handleIssueDataChange({
-              ...issueData,
+              ...initialData,
               assignee: users.find(user => user._id === e.target.value)?.username || '',
               profilephoto: users.find(user => user._id === e.target.value)?.profilephoto || '',
               assigneeId: e.target.value || '',
@@ -118,10 +101,10 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
           id='label'
           className='bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-52'
           placeholder='bug, feature, improvement'
-          value={issueData.label.join(', ')}
+          value={initialData.label.join(', ')}
           onChange={(e) => 
             handleIssueDataChange({ 
-              ...issueData, 
+              ...initialData, 
               label: e.target.value.split(',').map((label) => label.trim())
             })
           }
@@ -132,8 +115,8 @@ export default function IssueBox({ initialData, title, onClose, onIssueDataChang
           className="bg-gray-700 text-slate-200 rounded-sm p-1 focus:outline-none w-28"
           placeholder="Due Date"
           required
-          value={issueData.dueDate}
-          onChange={(e) => handleIssueDataChange({...issueData, dueDate: e.target.value})}
+          value={initialData.dueDate}
+          onChange={(e) => handleIssueDataChange({...initialData, dueDate: e.target.value})}
           onFocus={(e) => {
             e.target.type = "date";
           }}

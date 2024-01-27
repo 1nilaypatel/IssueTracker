@@ -35,6 +35,7 @@ export default function CreateIssue({ isOpen, onClose }) {
       profilephoto: '',
       assigneeId: '',
     });
+    setError(false);
     onClose();
   };
 
@@ -97,7 +98,7 @@ export default function CreateIssue({ isOpen, onClose }) {
           <div className='bg-gray-900 max-w-4xl px-4 pt-5 pb-4 sm:p-5 sm:pb-4'>
             <IssueBox
               initialData={issueData}
-              onClose={onClose}
+              onClose={resetAndClose}
               title="New Issue"
               onIssueDataChange={handleIssueDataChange}
             />
