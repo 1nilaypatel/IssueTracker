@@ -20,8 +20,12 @@ const userSchema = new mongoose.Schema({
     default: "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
   },
   issuesCreated:{
-    default: 0,
     type: Number,
+    default: 0,
+  },
+  showRedDot:{
+    type: Boolean,
+    default: false,
   },
   notifications:[
     {

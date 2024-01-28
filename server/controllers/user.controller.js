@@ -21,6 +21,7 @@ export const addNotification = async (req, res, next) => {
   }
   try {
     user.notifications.push(req.body);
+    user.showRedDot = true;
     await user.save();
     res.status(200).json("Notification added successfully!");
   } catch (error) {
@@ -83,6 +84,20 @@ export const clearAllNotifications = async (req, res, next) => {
     user.notifications = [];
     await user.save();
     res.status(200).json("All notifications cleared successfully!");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetRedDot = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if(!user){
+    return next(errorHandler(404, "User not found"));
+  }
+  try {
+    user.showRedDot = false;
+    await user.save();
+    res.status(200).json("RedDot reset successfully!");
   } catch (error) {
     next(error);
   }
