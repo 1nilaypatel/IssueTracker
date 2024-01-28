@@ -12,6 +12,7 @@ export default function AuthenticatedAppbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [showRedDot, setShowRedDot] = useState(currentUser.showRedDot);
   const filterRef = useRef(null);
   const notifiactionsRef = useRef(null);
 
@@ -33,6 +34,8 @@ export default function AuthenticatedAppbar() {
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
+    resetRedDot();
+    setShowRedDot(false);
   };
 
   const closeNotifications = () => {
@@ -69,6 +72,9 @@ export default function AuthenticatedAppbar() {
       if (notifiactionsRef.current && !notifiactionsRef.current.contains(event.target)) {
         closeNotifications();
       }
+      if (showRedDot) {
+        resetRedDot();
+      }
     };
     document.addEventListener('click', handleClickOutside);
     return () => {
@@ -76,10 +82,31 @@ export default function AuthenticatedAppbar() {
     };
   }, []);
 
+  const clearAllNotifications = async () => {
+    try{
+      await axios.post(`/server/user/clear-all-notifications/${currentUser._id}`);
+      await fetchUser();
+    }catch(error){
+      console.error("Error clearing notifications", error);
+    }
+  };
+
+  const resetRedDot = async () => {
+    try {
+      await axios.post(`/server/user/resetRedDot/${currentUser._id}`);
+    } catch (error) {
+      console.error('Error resetting red dot', error);
+    }
+  };
+
   const fetchUser = async () => {
     try{
       const response = await axios.get(`/server/user/${currentUser._id}`);
-      dispatch(signInSuccess(response.data));
+      const updatedUser = response.data;
+      if(updatedUser.showRedDot){
+        setShowRedDot(true);
+      }
+      dispatch(signInSuccess(updatedUser));
     }catch{
       console.error('Error fetching User', error);
     }
@@ -112,6 +139,9 @@ export default function AuthenticatedAppbar() {
           )}
         </div>
         <div className='relative' ref={notifiactionsRef}>
+          {showRedDot && (
+            <span className='absolute w-1 h-1 bg-red-500 rounded-full top-0 right-0' />
+          )}
           <BsBell className='text-slate-400 mr-1 cursor-pointer' onClick={toggleNotifications} />
           {isNotificationsOpen && (
             <div className='absolute bg-gray-900 rounded-md shadow-lg p-4 h-auto w-80 -right-4 text-slate-300'>
@@ -123,7 +153,10 @@ export default function AuthenticatedAppbar() {
                   </li>
                 ))}
               </ul>
-              <button className="text-slate-300 hover:font-semibold hover:text-slate-100 transition">
+              <button
+                onClick={clearAllNotifications}
+                className="text-slate-300 hover:font-semibold hover:text-slate-100 transition"
+              >
                 Clear all
               </button>
             </div>
