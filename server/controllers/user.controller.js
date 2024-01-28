@@ -73,3 +73,17 @@ export const updateUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const clearAllNotifications = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(errorHandler(404, "User not found"));
+  }
+  try {
+    user.notifications = [];
+    await user.save();
+    res.status(200).json("All notifications cleared successfully!");
+  } catch (error) {
+    next(error);
+  }
+};
