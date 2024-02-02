@@ -46,7 +46,7 @@ export default function Profile() {
   const handleLogout = async () => {
     try{
       dispatch(logOutUserStart());
-      const response = await axios.get("/server/auth/logout");
+      const response = await axios.post("/server/auth/logout");
       if(response.data.success === false){
         dispatch(logOutUserFailure(response.data.message));
         return;
