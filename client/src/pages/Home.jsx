@@ -103,7 +103,7 @@ export default function Home(){
             <img
               src={notification}
               alt="Notification img"
-              className="rounded-md shadow-2xl md:h-96 lg:h-fit"
+              className="rounded-md shadow-2xl md:h-96 lg:h-auto"
             />
           </div>
         </motion.section>
@@ -123,12 +123,12 @@ export default function Home(){
             <img
               src={filterByPriority}
               alt="Filter By Priority img"
-              className="rounded-md shadow-2xl md:h-96 lg:h-fit"
+              className="rounded-md shadow-2xl md:h-96 lg:h-auto"
             />
             <img
               src={filterByStatus}
               alt="Filter By Status img"
-              className="rounded-md shadow-2xl md:h-96 lg:h-fit"
+              className="rounded-md shadow-2xl md:h-96 lg:h-auto"
             />
           </div>
         </motion.section>
@@ -157,7 +157,7 @@ export default function Home(){
           <img
             src={filterByDueDate}
             alt="Filter By Due Date img"
-            className="rounded-md shadow-2xl md:h-96 lg:h-fit lg:mr-12"
+            className="rounded-md shadow-2xl md:h-96 lg:h-auto lg:mr-12"
           />
         </motion.div>
       </motion.section>
@@ -169,7 +169,7 @@ export default function Home(){
           <motion.img
             src={mobileView}
             alt="Mobile View img"
-            className="rounded-md h-96 md:h-96 lg:h-fit"
+            className="rounded-md h-96 md:h-96 lg:h-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 4 }}
