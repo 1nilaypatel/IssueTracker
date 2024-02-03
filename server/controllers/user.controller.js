@@ -58,11 +58,10 @@ export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, "Unautharized to update others"));
   }
-  const { username } = req.body;
   try {
     const updateUser = await User.findByIdAndUpdate(
       req.params.id,
-      { $set: { username } },
+      req.body,
       { new: true }
     );
     if (!updateUser) {
